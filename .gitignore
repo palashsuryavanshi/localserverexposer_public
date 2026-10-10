@@ -1,0 +1,15 @@
+# This repository holds documentation and assets only.
+# Compiled binaries are published as GitHub Release assets, never committed.
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*~

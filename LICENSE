@@ -1,0 +1,46 @@
+# Local Server Exposer — Notice
+
+**Copyright © 2026 palashsuryavanshi. All rights reserved.**
+
+This repository (`localserverexposer_public`) contains public documentation,
+screenshots and links to released binaries of the **Local Server Exposer**
+desktop application for Windows.
+
+## No license granted
+
+The materials in this repository and the application binaries published as
+release assets are **not licensed under any open-source license**. No permission
+is granted to copy, modify, sublicense, redistribute, rebrand, or create
+derivative works from them. Where the law reserves rights to the copyright
+holder or its licensors, all rights are reserved.
+
+This file is a copyright notice, not a complete license agreement, and it does
+not purport to enumerate prohibited conduct beyond the default reservation of
+rights.
+
+## Trademarks
+
+"Local Server Exposer", the application name, its icon and screenshots are used
+to identify the software published by its owner. Third-party names referenced in
+the documentation (including Cloudflare, cloudflared, Tauri, React, Rust and
+WebView2) remain the property of their respective owners and are used for
+identification only.
+
+## Owner decision pending
+
+**No license has been approved by the copyright holder for this software.**
+Before public distribution is widened, the owner must choose the terms — for
+example a proprietary end-user license agreement, a source-available license, or
+an open-source license. Until that decision is made and this file is replaced
+with the approved terms, the default reservation of rights above applies.
+
+Any questions about licensing should be raised as an issue in this repository
+before redistribution or reuse.
+
+---
+
+*Third-party components distributed with the application are licensed by their
+own authors and are not covered by this notice. In particular, `cloudflared` is
+© Cloudflare, Inc. and is licensed under the Apache License 2.0; it is
+downloaded separately by the application at the user's request and is not
+redistributed as part of these releases.*

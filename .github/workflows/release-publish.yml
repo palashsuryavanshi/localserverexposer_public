@@ -1,0 +1,105 @@
+# Verifies that the checksums published with a release match the binaries that
+# were actually uploaded.
+#
+# Safety properties, by design:
+#   * it runs only on releases that already exist (or a manual re-run), never on
+#     pull requests, so no untrusted change can influence it;
+#   * it uses no third-party actions, no secrets and no write access to any
+#     repository - only the automatic GITHUB_TOKEN with read access to this repo;
+#   * it cannot create, edit or delete a release or an asset;
+#   * it never touches the private source repository.
+#
+# Publishing is deliberately NOT automated here: release artifacts are produced
+# and uploaded by the maintainer (or by the private repository's release
+# workflow), and this job then independently confirms their integrity.
+
+name: Verify release checksums
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to verify, e.g. v1.0.0"
+        required: true
+        type: string
+
+# Least privilege: read this repository's releases, nothing else.
+permissions:
+  contents: read
+
+jobs:
+  verify-checksums:
+    name: Verify SHA-256 checksums
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write # only to leave a verification comment on the release
+    steps:
+      - name: Resolve the release to verify
+        id: meta
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          tag="${EVENT_TAG:-$INPUT_TAG}"
+          if [ -z "$tag" ]; then
+            echo "::error::no release tag to verify"; exit 1
+          fi
+          id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$tag" --jq .id)"
+          url="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$tag" --jq .html_url)"
+          echo "tag=$tag"    >> "$GITHUB_OUTPUT"
+          echo "id=$id"      >> "$GITHUB_OUTPUT"
+          echo "url=$url"    >> "$GITHUB_OUTPUT"
+
+      - name: Download the published artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.meta.outputs.tag }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir dist --clobber
+          ls -l dist
+
+      - name: Recompute and compare checksums
+        run: |
+          set -euo pipefail
+          cd dist
+          if [ ! -f SHA256SUMS.txt ]; then
+            echo "::error::SHA256SUMS.txt is missing from the release"
+            exit 1
+          fi
+          # --strict fails both on a mismatch and on a listed file that is absent.
+          sha256sum --check --strict SHA256SUMS.txt
+          echo "All published checksums match the uploaded artifacts."
+
+      - name: Comment the outcome on the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.meta.outputs.tag }}
+          RELEASE_ID: ${{ steps.meta.outputs.id }}
+          RELEASE_URL: ${{ steps.meta.outputs.url }}
+        run: |
+          set -euo pipefail
+          cat > comment.md <<'MD'
+          ### ✅ Checksum verification
+
+          Every artifact listed in `SHA256SUMS.txt` was downloaded from this
+          release and its SHA-256 recomputed; all values matched.
+
+          Verify a download yourself:
+
+          ```powershell
+          Get-FileHash ".\Local Server Exposer_1.0.0_x64-setup.exe" -Algorithm SHA256
+          ```
+
+          > These binaries are not code-signed, so SmartScreen will warn on first
+          > run. Verify the checksum before choosing *More info → Run anyway*.
+          MD
+          gh api "repos/${GITHUB_REPOSITORY}/releases/$RELEASE_ID/comments" \
+            --method POST --input - <<< "$(jq -Rs . < comment.md)" \
+            --jq '.html_url'
