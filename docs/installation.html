@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation — Local Server Exposer</title>
+<meta name="description" content="Install Local Server Exposer 1.0.0 on Windows 10/11 x64: per-user install with no administrator rights, checksum verification, first launch and uninstall instructions.">
+<link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/installation.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Installation — Local Server Exposer">
+<meta property="og:description" content="Per-user Windows install, checksum verification, first launch and uninstall.">
+<meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/installation.html">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="">Local Server Exposer</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="installation.html" aria-current="page">Installation</a>
+      <a href="troubleshooting.html">Troubleshooting</a>
+      <a href="security.html">Security</a>
+      <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">Downloads</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="page-head">
+    <p class="breadcrumbs"><a href="index.html">Home</a> / Installation</p>
+    <h1>Installation</h1>
+    <p>
+      Local Server Exposer is a <strong>per-user Windows application</strong>.
+      Installation needs no administrator rights and does not change
+      system-wide state.
+    </p>
+  </div>
+
+  <section>
+    <div class="prose">
+
+      <h2>Requirements</h2>
+      <table>
+        <tr><th>Operating system</th><td>Windows 10 or 11, 64-bit (x64)</td></tr>
+        <tr><th>Disk</th><td>About 3&nbsp;MB for the installer</td></tr>
+        <tr><th>Other software</th><td>Microsoft Edge WebView2 Runtime — normally already present; the installer offers to fetch it if missing</td></tr>
+        <tr><th>Internet</th><td>Needed to start a tunnel, and once to download the tunnel client (~55&nbsp;MB)</td></tr>
+      </table>
+      <p>ARM64 and non-Windows platforms are <strong>not supported</strong>.</p>
+
+      <h2>Install the latest release</h2>
+      <ol class="steps">
+        <li>Open the <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">releases page</a> and download <code>LocalServerExposer_1.0.0_x64-setup.exe</code>.</li>
+        <li>Run the installer — it is a <strong>per-user install</strong>, so no administrator prompt appears.</li>
+        <li>Launch <strong>Local Server Exposer</strong> from the Start Menu.</li>
+      </ol>
+
+      <p>What the installer does:</p>
+      <ul>
+        <li>installs the app under <code>%LOCALAPPDATA%\Local Server Exposer</code>;</li>
+        <li>adds a Start Menu shortcut;</li>
+        <li>registers an uninstall entry under <em>Settings → Apps → Installed apps</em>;</li>
+        <li>installs the Microsoft Visual C++ runtime the app needs;</li>
+        <li>offers to install the WebView2 runtime if it is missing.</li>
+      </ul>
+
+      <p>
+        Your settings, logs and the optional tunnel client live in a
+        <strong>separate</strong> folder,
+        <code>%APPDATA%\com.localexp.local-server-exposer\</code>, so uninstalling
+        the application does not delete them.
+      </p>
+
+      <h2>Verify the download</h2>
+      <p>
+        Each release publishes a <code>SHA256SUMS.txt</code>. To check the
+        installer in PowerShell:
+      </p>
+      <pre><code>Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256</code></pre>
+      <p>Compare the result with the published value:</p>
+      <pre><code>f9c5b14266ea4ca4f337bc07053c6e3a160ead384286a82e75ecbc01a00c12a4  LocalServerExposer_1.0.0_x64-setup.exe</code></pre>
+
+      <div class="callout warn">
+        <p>
+          The binaries are <strong>not code-signed</strong>, so Windows
+          SmartScreen shows an "unrecognized app" warning on first run. Verify
+          the checksum before choosing <em>More info → Run anyway</em>.
+        </p>
+      </div>
+
+      <h2>First launch</h2>
+      <ul>
+        <li>The window opens in about a second and starts scanning for local servers.</li>
+        <li>The tray icon appears; closing the window keeps the app in the background.</li>
+        <li>The first time you expose a server, the app asks before downloading the <code>cloudflared</code> client. That download is explicit and never happens at install time.</li>
+      </ul>
+
+      <h2>Upgrade</h2>
+      <p>
+        Run a newer installer over the existing one. Settings, favorites and
+        logs are preserved. To move back to an older build, uninstall first —
+        the installer blocks downgrades by default.
+      </p>
+
+      <h2>Uninstall</h2>
+      <ol class="steps">
+        <li><em>Settings → Apps → Installed apps → Local Server Exposer → Uninstall</em>, or the <em>Uninstall</em> shortcut in the Start Menu folder.</li>
+        <li>The application, its shortcut and its uninstall entry are removed.</li>
+        <li>Your data in <code>%APPDATA%\com.localexp.local-server-exposer\</code> is <strong>kept</strong> — delete that folder manually for a complete removal.</li>
+        <li>Any running tunnels are stopped when the application exits.</li>
+      </ol>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div><strong>Local Server Exposer</strong><br>Maintained by <a href="https://github.com/palashsuryavanshi">palashsuryavanshi</a></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="getting-started.html">Getting started</a>
+        <a href="installation.html">Installation</a>
+        <a href="troubleshooting.html">Troubleshooting</a>
+        <a href="security.html">Security</a>
+        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">Report an issue</a>
+      </nav>
+    </div>
+    <p class="legal">Proprietary software — all rights reserved. Distributed as a compiled binary; the source code is not publicly available.</p>
+  </div>
+</footer>
+
+</body>
+</html>

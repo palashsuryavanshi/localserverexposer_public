@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local Server Exposer — Share your local dev server with the internet</title>
+<meta name="description" content="A free Windows desktop app that finds the HTTP servers running on your machine and gives selected ones a public https://*.trycloudflare.com URL through Cloudflare Quick Tunnels. No router changes, no port forwarding.">
+<link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Local Server Exposer — share your local dev server">
+<meta property="og:description" content="Expose a local development server through a Cloudflare Quick Tunnel in one click. Windows 10/11 x64.">
+<meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/">
+<meta property="og:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/screenshot-main.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.png" alt="">
+      Local Server Exposer
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="installation.html">Installation</a>
+      <a href="troubleshooting.html">Troubleshooting</a>
+      <a href="security.html">Security</a>
+      <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">Downloads</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <img class="logo" src="assets/logo.png" alt="Local Server Exposer logo" width="108" height="108">
+      <h1>Share your local dev server with the world</h1>
+      <p class="lead">
+        A lightweight Windows app that finds the HTTP servers running on your
+        machine and gives the one you choose a public
+        <code>https://….trycloudflare.com</code> URL. No router changes, no port
+        forwarding, no public IP.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe">Download for Windows</a>
+        <a class="btn btn-secondary" href="getting-started.html">See how it works</a>
+      </div>
+      <p class="note">Version 1.0.0 · 2.78&nbsp;MB per-user installer · Windows 10/11 x64</p>
+      <div class="badges">
+        <span class="badge-chip">No router configuration</span>
+        <span class="badge-chip">No account required</span>
+        <span class="badge-chip">No telemetry</span>
+        <span class="badge-chip">Source not public</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>The problem</h2>
+      <p class="section-intro">
+        You started a dev server on <code>localhost:3000</code>. A client, a
+        teammate on another network, or a webhook needs to reach it. The usual
+        answers are all awkward: a tunnel CLI in another terminal, router port
+        forwarding, or deploying a preview build somewhere else.
+      </p>
+      <p>
+        Local Server Exposer puts that in one small desktop app: it lists what
+        is actually listening on your machine, and one click turns a chosen
+        server into a public HTTPS URL.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>See it in action</h2>
+      <p class="section-intro">Real screenshots from version 1.0.0.</p>
+
+      <div class="shot-grid">
+        <figure class="shot shot-wide">
+          <img src="assets/screenshot-main.png" alt="The Servers page listing local listeners with Ready and Unsupported states and an Expose button on each card" loading="lazy">
+          <figcaption>Every loopback listener, classified, with the process that owns it.</figcaption>
+        </figure>
+
+        <figure class="shot">
+          <img src="assets/screenshot-confirm.png" alt="A confirmation dialog warning that the server becomes reachable from the public internet, showing the URL and process" loading="lazy">
+          <figcaption>Sharing is never accidental: every exposure is confirmed.</figcaption>
+        </figure>
+
+        <figure class="shot">
+          <img src="assets/screenshot-tunnel.png" alt="A server card labelled Exposed showing a public trycloudflare.com URL with Copy, Open and Stop buttons" loading="lazy">
+          <figcaption>The public URL appears only once the tunnel is really serving.</figcaption>
+        </figure>
+
+        <figure class="shot">
+          <img src="assets/screenshot-tunnels-page.png" alt="The Tunnels page listing one running tunnel with its status, start time and action buttons" loading="lazy">
+          <figcaption>All active tunnels, with status and start time.</figcaption>
+        </figure>
+
+        <figure class="shot">
+          <img src="assets/screenshot-settings.png" alt="The Settings page with discovery options, scan interval, cloudflared management and preference toggles" loading="lazy">
+          <figcaption>Scan tuning, cloudflared management and preferences.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>What it does</h2>
+      <p class="section-intro">
+        Every item below is implemented in 1.0.0 — nothing is a placeholder.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h3>Automatic discovery</h3>
+          <p>Reads your machine's IPv4 listening sockets through the native Windows TCP table and shows the owning process for each port.</p>
+        </div>
+        <div class="card">
+          <h3>Honest classification</h3>
+          <p>Each port is probed and labelled <em>Ready</em> (HTTP/HTTPS), <em>Unsupported</em>, or <em>Unreachable</em> — with a plain-language reason. Only HTTP/HTTPS can be shared.</p>
+        </div>
+        <div class="card">
+          <h3>One-click Quick Tunnels</h3>
+          <p>Exposes the selected port at an ephemeral <code>*.trycloudflare.com</code> URL, with copy, open-in-browser and stop.</p>
+        </div>
+        <div class="card">
+          <h3>Confirmation every time</h3>
+          <p>Every new tunnel and every retry asks first, naming the exact port and process. There is no "don't ask again".</p>
+        </div>
+        <div class="card">
+          <h3>Several tunnels at once</h3>
+          <p>Each exposed port gets its own independent tunnel. Stopping one leaves the others running.</p>
+        </div>
+        <div class="card">
+          <h3>Never left behind</h3>
+          <p>Tunnels are tied to the app: they stop when it exits and cannot survive a crash, a forced kill or a sign-out.</p>
+        </div>
+        <div class="card">
+          <h3>System tray &amp; notifications</h3>
+          <p>Closing the window keeps it in the tray. You get a desktop notification when a tunnel goes live or fails.</p>
+        </div>
+        <div class="card">
+          <h3>Search, filters, favorites</h3>
+          <p>Search by port, process name or detected framework. Filter by HTTP, exposed or available. Star the ports you use.</p>
+        </div>
+        <div class="card">
+          <h3>Settings that persist</h3>
+          <p>Scan interval, discovery options, favorites, start-with-Windows, and where to find the tunnel client.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Quick start</h2>
+      <p class="section-intro">Three steps, about a minute.</p>
+      <ol class="steps prose">
+        <li><strong>Start your local server</strong> — for example something serving on <code>http://localhost:3000</code>.</li>
+        <li><strong>Open the app.</strong> The port appears as a card with its process and the status <em>Ready</em>.</li>
+        <li><strong>Click Expose, confirm, and wait</strong> for the public URL, then copy it or open it in your browser.</li>
+      </ol>
+      <p><a class="btn btn-secondary" href="getting-started.html">Full walkthrough</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>System requirements</h2>
+      <div class="prose">
+        <table>
+          <tr><th>Operating system</th><td>Windows 10 or 11, 64-bit (x64). ARM64 and non-Windows are not supported.</td></tr>
+          <tr><th>Memory</th><td>About 40&nbsp;MB for the app; the WebView2 runtime adds roughly 300&nbsp;MB.</td></tr>
+          <tr><th>Disk</th><td>About 3&nbsp;MB installed, plus a one-off ~55&nbsp;MB download of the tunnel client if you approve it.</td></tr>
+          <tr><th>Other software</th><td>Microsoft Edge WebView2 Runtime — normally already installed on Windows 10/11. The installer offers to fetch it if missing.</td></tr>
+          <tr><th>Internet</th><td>Needed to start a tunnel, and once to download the tunnel client.</td></tr>
+          <tr><th>Administrator rights</th><td>Not required. The install is per-user.</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Security, in plain language</h2>
+      <div class="prose">
+        <div class="callout warn">
+          <p><strong>Exposing a server makes it reachable from the public internet.</strong></p>
+          <p>A Quick Tunnel URL is unguessable but <em>bearer access</em>: anyone who has the link can reach your server until you stop the tunnel. Treat it like a password — do not post it, and do not put it in a bug report.</p>
+        </div>
+        <ul>
+          <li><strong>Confirm every exposure.</strong> Every tunnel and retry asks for confirmation, showing the exact port and process.</li>
+          <li><strong>Only HTTP and HTTPS can be shared</strong>, re-checked by the app itself immediately before each tunnel starts. Databases, SSH and admin ports are refused.</li>
+          <li><strong>Tunnels never outlive the app</strong>, so a public URL cannot keep serving without supervision.</li>
+          <li><strong>No telemetry and no analytics.</strong> Local logs are kept for 7 days with tunnel URLs redacted before anything is written.</li>
+          <li><strong>The installer is not code-signed</strong>, so Windows SmartScreen warns on first run. Verify the published SHA-256 checksum before choosing <em>More info → Run anyway</em>.</li>
+        </ul>
+        <p><a href="security.html">Read the full security and privacy notes</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Download</h2>
+      <div class="prose">
+        <table class="download">
+          <tr><th>File</th><th>Size</th><th>SHA-256</th></tr>
+          <tr>
+            <td><code>LocalServerExposer_1.0.0_x64-setup.exe</code></td>
+            <td>2.78 MB</td>
+            <td class="sha">f9c5b14266ea4ca4f337bc07053c6e3a160ead384286a82e75ecbc01a00c12a4</td>
+          </tr>
+        </table>
+        <p>
+          <a class="btn btn-primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe">Download v1.0.0</a>
+        </p>
+        <p>
+          Older and newer builds, plus the checksum file, are on the
+          <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">releases page</a>.
+          Every release is verified automatically by a workflow that recomputes
+          each checksum.
+        </p>
+        <p><a href="installation.html">Installation instructions</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Frequently asked questions</h2>
+      <div class="prose">
+        <dl class="faq">
+          <dt>Does it need my router configured?</dt>
+          <dd>No. Outbound connections only — no port forwarding, no static IP, no router access.</dd>
+
+          <dt>Is there a usage or duration limit?</dt>
+          <dd>The app imposes none. A tunnel lasts as long as it is running; restarting it produces a new URL.</dd>
+
+          <dt>Can I use a custom domain or my Cloudflare account?</dt>
+          <dd>Not in this version. Only anonymous Quick Tunnels are supported.</dd>
+
+          <dt>Can it share a database or an SSH port?</dt>
+          <dd>No, and it will refuse: exposure requires the target to answer as HTTP or HTTPS.</dd>
+
+          <dt>Does it collect anything?</dt>
+          <dd>No telemetry, no analytics, no account. See <a href="security.html">security and privacy</a>.</dd>
+
+          <dt>Why isn't the source code here?</dt>
+          <dd>This is the public download and documentation site. The application ships as a compiled binary.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <strong>Local Server Exposer</strong><br>
+        Maintained by <a href="https://github.com/palashsuryavanshi">palashsuryavanshi</a>
+      </div>
+      <nav>
+        <a href="getting-started.html">Getting started</a>
+        <a href="installation.html">Installation</a>
+        <a href="troubleshooting.html">Troubleshooting</a>
+        <a href="security.html">Security</a>
+        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">Report an issue</a>
+      </nav>
+    </div>
+    <p class="legal">
+      Proprietary software — all rights reserved. Distributed as a compiled binary;
+      the source code is not publicly available. Tunnel URLs are access
+      credentials: never publish one.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

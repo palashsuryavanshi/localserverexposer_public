@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started — Local Server Exposer</title>
+<meta name="description" content="From a running dev server to a public https:// URL in three steps: discover local servers, confirm the exposure, then copy, open or stop the tunnel. Includes status labels and useful settings.">
+<link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/getting-started.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting started — Local Server Exposer">
+<meta property="og:description" content="Discover a local server, confirm the exposure, and share it through a Cloudflare Quick Tunnel.">
+<meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/getting-started.html">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="">Local Server Exposer</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html" aria-current="page">Getting started</a>
+      <a href="installation.html">Installation</a>
+      <a href="troubleshooting.html">Troubleshooting</a>
+      <a href="security.html">Security</a>
+      <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">Downloads</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="page-head">
+    <p class="breadcrumbs"><a href="index.html">Home</a> / Getting started</p>
+    <h1>Getting started</h1>
+    <p>
+      A five-minute tour: from "my dev server is running" to "here is a public
+      URL".
+    </p>
+  </div>
+
+  <section>
+    <div class="prose">
+
+      <h2>The three pages</h2>
+      <table>
+        <tr><th>Servers</th><td>Everything listening on your machine, with an <em>Expose</em> button for the ones that can be shared.</td></tr>
+        <tr><th>Tunnels</th><td>The tunnels you currently have running, with their public URLs.</td></tr>
+        <tr><th>Settings</th><td>Scan tuning, tunnel-client management, favorites and autostart.</td></tr>
+      </table>
+      <p>The badge on <strong>Tunnels</strong> shows how many are running.</p>
+
+      <h2>1. Find your server</h2>
+      <p>
+        Start your development server as usual — for example something
+        listening on <code>http://localhost:3000</code>. The Servers page
+        refreshes on its own (every 15 seconds by default); you can also press
+        <strong>Refresh</strong>.
+      </p>
+      <p>Each listener appears as a card showing:</p>
+      <ul>
+        <li>the <strong>port</strong> and a clickable local address;</li>
+        <li>the <strong>process</strong> that owns it (for example <code>node.exe · PID 14548</code>);</li>
+        <li>a <strong>status label</strong>, and for web servers the response status, page title and a best-effort framework hint.</li>
+      </ul>
+
+      <figure class="shot">
+        <img src="assets/screenshot-main.png" alt="The Servers page listing local listeners with status labels and Expose buttons" loading="lazy">
+        <figcaption>Local listeners, classified, with the owning process.</figcaption>
+      </figure>
+
+      <h2>2. Expose it</h2>
+      <ol class="steps">
+        <li>Press <strong>Expose</strong> on a card marked <em>Ready</em>.</li>
+        <li>Read the confirmation: it states plainly that the server becomes reachable from the public internet, and shows the exact URL and process. <strong>Cancel</strong> is focused; Escape or clicking outside also cancels.</li>
+        <li>Press <strong>Expose</strong> to confirm.</li>
+      </ol>
+
+      <figure class="shot">
+        <img src="assets/screenshot-confirm.png" alt="The exposure confirmation dialog with the warning and server details" loading="lazy">
+        <figcaption>Every exposure is confirmed individually — there is no "remember my choice" option.</figcaption>
+      </figure>
+
+      <p>
+        While the tunnel starts, the card shows <strong>Starting</strong>. The
+        public URL appears only once the tunnel is genuinely serving — the app
+        never shows a URL it has not actually received.
+      </p>
+
+      <h2>3. Share it</h2>
+      <table>
+        <tr><th>Copy</th><td>Copies the exact public URL to your clipboard.</td></tr>
+        <tr><th>Open</th><td>Opens the URL in your default browser.</td></tr>
+        <tr><th>Stop</th><td>Stops the tunnel. The public URL stops working immediately.</td></tr>
+      </table>
+      <p>The same URL, start time and status appear on the Tunnels page.</p>
+
+      <figure class="shot">
+        <img src="assets/screenshot-tunnel.png" alt="A server card labelled Exposed with a public URL and Copy, Open and Stop buttons" loading="lazy">
+        <figcaption>A live tunnel with its public URL.</figcaption>
+      </figure>
+
+      <h2>4. Stop it</h2>
+      <p>
+        Press <strong>Stop</strong> on the card or on the Tunnels page. To stop
+        everything at once, use <strong>Stop all tunnels</strong> in the tray
+        menu. Tunnels are also stopped automatically when the application
+        exits — a tunnel cannot outlive the app, even if the app is killed.
+      </p>
+
+      <h2>Reading the status labels</h2>
+      <table>
+        <tr><th>Ready</th><td>Answers HTTP or HTTPS. The only state that can be exposed.</td></tr>
+        <tr><th>Unsupported</th><td>Listens, but does not speak HTTP/HTTPS. Cannot be exposed — by design.</td></tr>
+        <tr><th>Unknown</th><td>The port could not be classified yet.</td></tr>
+        <tr><th>Unreachable</th><td>Listed but did not answer when probed.</td></tr>
+        <tr><th>Starting</th><td>The tunnel client is registering with Cloudflare.</td></tr>
+        <tr><th>Exposed / Running</th><td>Live — the public URL is working.</td></tr>
+        <tr><th>Stopping…</th><td>Shutting down.</td></tr>
+        <tr><th>Tunnel failed</th><td>It could not start, or it died unexpectedly. The card shows why; press <em>Retry</em>.</td></tr>
+      </table>
+      <p>
+        If a tunnel is still <em>Starting</em> after a minute, the app gives up
+        and reports the failure with a reason instead of spinning forever.
+      </p>
+
+      <h2>Finding things quickly</h2>
+      <ul>
+        <li><strong>Filters</strong> — <em>All</em>, <em>HTTP</em>, <em>Exposed</em>, <em>Available</em>.</li>
+        <li><strong>Search</strong> — matches port number, process name or framework, so <code>5173</code>, <code>node</code> or <code>vite</code> narrows the list.</li>
+        <li><strong>Favorites</strong> — star a card to pin it to the top; favorites persist across restarts.</li>
+        <li><strong>Ghost rows</strong> — if a tunneled server disappears, its card stays visible as <em>unavailable</em> so you can still stop the tunnel.</li>
+      </ul>
+
+      <h2>Settings worth knowing</h2>
+      <table>
+        <tr><th>Scan interval</th><td>Seconds between scans (5–300).</td></tr>
+        <tr><th>Enable HTTP / HTTPS detection</th><td>Turn off to list listeners without probing them.</td></tr>
+        <tr><th>Scan localhost only</th><td>Off lists LAN listeners too, but they are never exposable.</td></tr>
+        <tr><th>Maximum concurrent probes</th><td>Parallel probes per scan (1–256). Lower it on a slow machine.</td></tr>
+        <tr><th>cloudflared executable</th><td>Leave on <em>Automatic</em>, or point at your own copy. It is re-verified before every tunnel.</td></tr>
+        <tr><th>Minimize to tray</th><td>Closing the window keeps the app in the tray.</td></tr>
+        <tr><th>Stop tunnel when its server stops</th><td>Off (default) keeps a tunnel alive across a quick server restart.</td></tr>
+      </table>
+
+      <div class="callout">
+        <p>
+          <strong>"Stop tunnels when application exits" is always on.</strong>
+          Tunnels are tied to the app so that a public URL can never keep
+          running without supervision.
+        </p>
+      </div>
+
+      <p>Next: <a href="troubleshooting.html">troubleshooting</a> · <a href="security.html">security and privacy</a></p>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div><strong>Local Server Exposer</strong><br>Maintained by <a href="https://github.com/palashsuryavanshi">palashsuryavanshi</a></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="getting-started.html">Getting started</a>
+        <a href="installation.html">Installation</a>
+        <a href="troubleshooting.html">Troubleshooting</a>
+        <a href="security.html">Security</a>
+        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">Report an issue</a>
+      </nav>
+    </div>
+    <p class="legal">Proprietary software — all rights reserved. Distributed as a compiled binary; the source code is not publicly available.</p>
+  </div>
+</footer>
+
+</body>
+</html>

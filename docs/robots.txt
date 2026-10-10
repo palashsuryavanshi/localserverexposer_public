@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://palashsuryavanshi.github.io/localserverexposer_public/sitemap.xml

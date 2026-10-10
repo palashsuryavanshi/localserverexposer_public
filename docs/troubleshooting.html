@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting and FAQ — Local Server Exposer</title>
+<meta name="description" content="Fixes for the most common Local Server Exposer problems: no servers listed, unsupported ports, cloudflared missing, tunnels stuck starting or failed, SmartScreen warnings, and uninstall behaviour.">
+<link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/troubleshooting.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Troubleshooting and FAQ — Local Server Exposer">
+<meta property="og:description" content="Common problems and how to fix them, from discovery issues to tunnel failures.">
+<meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/troubleshooting.html">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="">Local Server Exposer</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="installation.html">Installation</a>
+      <a href="troubleshooting.html" aria-current="page">Troubleshooting</a>
+      <a href="security.html">Security</a>
+      <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">Downloads</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="page-head">
+    <p class="breadcrumbs"><a href="index.html">Home</a> / Troubleshooting</p>
+    <h1>Troubleshooting and FAQ</h1>
+    <p>Quick answers to the things people hit most often.</p>
+  </div>
+
+  <section>
+    <div class="prose">
+
+      <h2>Discovery</h2>
+
+      <h3>No servers are listed</h3>
+      <p>
+        Check that your dev server is bound to <code>127.0.0.1</code> (some
+        tools bind to a LAN address instead), then press <strong>Refresh</strong>.
+        If you expected LAN addresses to appear, check
+        <em>Settings → Scan localhost only</em>.
+      </p>
+
+      <h3>A port is marked <em>Unsupported</em></h3>
+      <p>
+        It is listening but does not answer as HTTP or HTTPS — a database, a
+        debugger protocol, a game server. This is deliberate: the app refuses to
+        expose anything it cannot identify as a web server.
+      </p>
+
+      <h3>A port is marked <em>Unreachable</em> or <em>Unknown</em></h3>
+      <p>
+        The socket was listed but did not answer the probe. That happens with
+        firewalled ports, ports closing as you scan, or sockets owned by
+        elevated processes whose identity the OS does not disclose to a normal
+        user.
+      </p>
+
+      <h3>A server keeps disappearing and coming back</h3>
+      <p>
+        Short-lived processes (a dev server restarting, a test fixture) do that.
+        Cards for servers that vanish while they are tunneled stay visible as
+        <em>unavailable</em> so you can still stop the tunnel.
+      </p>
+
+      <h2>Tunnels</h2>
+
+      <h3>Expose is unavailable</h3>
+      <p>
+        Only cards marked <strong>Ready</strong> can be exposed. Anything else is
+        either not an HTTP(S) service or was not reachable when it was scanned.
+      </p>
+
+      <h3>"cloudflared is not installed yet"</h3>
+      <p>
+        The tunnel client is downloaded on demand, never bundled. Open the
+        <strong>Tunnels</strong> page and choose <em>Install cloudflared</em>
+        (needs internet), or point <em>Settings → cloudflared executable</em> at
+        an existing copy. The copy is checked before every tunnel starts, so a
+        wrong or corrupted file is refused.
+      </p>
+
+      <h3>The tunnel stays on <em>Starting</em></h3>
+      <p>
+        Cloudflare edge registration normally completes within a few seconds. If
+        it has not after about a minute the app stops waiting and reports the
+        failure. Usual causes: no internet connection, a captive portal, a proxy
+        or VPN that blocks the connection, or Cloudflare being unreachable from
+        your network.
+      </p>
+
+      <h3>The tunnel says <em>Tunnel failed</em></h3>
+      <p>
+        Read the message on the card — it names the reason — then press
+        <strong>Retry</strong>. Common ones: the network dropped
+        mid-registration, the tunnel client was deleted or replaced while
+        running, or Cloudflare rejected the connection.
+      </p>
+
+      <h3>My public URL stopped working</h3>
+      <p>
+        Check whether the tunnel still shows <strong>Exposed</strong>. If it
+        stopped, start it again — each new tunnel gets a <strong>new</strong>
+        URL; the previous one is not reused.
+      </p>
+
+      <h3>What happens to my tunnels if the app crashes or I sign out?</h3>
+      <p>
+        They are stopped. Tunnels are attached to a Windows Job Object, so the
+        operating system terminates them when the app's process goes away. A
+        public URL can never keep serving without the app that you can use to
+        stop it.
+      </p>
+
+      <h2>The app</h2>
+
+      <h3>The window does not open, or opens blank</h3>
+      <p>
+        Install or repair the
+        <a href="https://developer.microsoft.com/microsoft-edge/webview2/">Microsoft Edge WebView2 Runtime</a>,
+        then restart the app. If it still fails, reinstall from the
+        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">releases page</a>.
+      </p>
+
+      <h3>Where did the window go?</h3>
+      <p>
+        Closing the window hides it to the tray when <em>Minimize to tray</em>
+        is on (the default). Use the tray icon to reopen it, or turn the setting
+        off.
+      </p>
+
+      <h3>Where are the logs?</h3>
+      <p>
+        <em>Settings → Open logs folder</em> opens
+        <code>%APPDATA%\com.localexp.local-server-exposer\logs\</code>. Daily
+        files are kept for 7 days; <code>panic.log</code> appears only if the app
+        ever crashes.
+      </p>
+
+      <h3>Does it slow my machine down?</h3>
+      <p>
+        No. Idle CPU use is effectively zero and a scan costs a fraction of a
+        percent of one core, even with dozens of listening ports. You can also
+        lengthen the scan interval in Settings.
+      </p>
+
+      <h2>Installation and SmartScreen</h2>
+
+      <h3>"Windows protected your PC" / "unrecognized app"</h3>
+      <p>
+        Expected — the binaries are not code-signed, so they have no publisher
+        reputation. Confirm you downloaded the file from the
+        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">releases page</a>,
+        verify it against the published <code>SHA256SUMS.txt</code>, then choose
+        <em>More info → Run anyway</em>. Never disable SmartScreen permanently.
+      </p>
+
+      <h3>The installer asks for administrator rights</h3>
+      <p>
+        It should not: the installer is per-user. If you are prompted, something
+        in your environment is rewriting the install — check with your
+        administrator.
+      </p>
+
+      <h3>Where is the app installed?</h3>
+      <p>
+        <code>%LOCALAPPDATA%\Local Server Exposer</code>. Settings, logs and the
+        downloaded tunnel client live separately in
+        <code>%APPDATA%\com.localexp.local-server-exposer\</code>.
+      </p>
+
+      <h3>Uninstalling left my data behind</h3>
+      <p>
+        Intentional. Settings, favorites, logs and the downloaded tunnel client
+        are kept so a reinstall keeps your preferences. Delete that folder to
+        remove everything.
+      </p>
+
+      <h2>Frequently asked questions</h2>
+      <dl class="faq">
+        <dt>Does this need port forwarding or a router configuration?</dt>
+        <dd>No. Outbound connections only. Nothing on your router has to change, and you do not need a static IP.</dd>
+
+        <dt>Is there a usage limit or a tunnel duration limit?</dt>
+        <dd>The app imposes none. Tunnels last as long as they are running, and Quick Tunnels are intended for development use.</dd>
+
+        <dt>Can I use my own domain, or my Cloudflare account?</dt>
+        <dd>Not in this version. Only anonymous Quick Tunnels are supported.</dd>
+
+        <dt>Can it share a database, SSH, or an admin panel?</dt>
+        <dd>It will refuse. Exposure requires the target to answer as HTTP or HTTPS, checked again immediately before a tunnel starts.</dd>
+
+        <dt>Does it collect telemetry or analytics?</dt>
+        <dd>No. There is no telemetry, no crash reporting to third parties, and no network activity beyond the tunnel and the one-off tunnel-client download. See <a href="security.html">security and privacy</a>.</dd>
+
+        <dt>Why isn't the source code available?</dt>
+        <dd>This project publishes compiled binaries and documentation. The application source is kept private.</dd>
+
+        <dt>How do I report a problem?</dt>
+        <dd>Open an <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">issue on GitHub</a> with the app version, your Windows version and what happened. Never paste a live tunnel URL — a URL is access to your server.</dd>
+      </dl>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div><strong>Local Server Exposer</strong><br>Maintained by <a href="https://github.com/palashsuryavanshi">palashsuryavanshi</a></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="getting-started.html">Getting started</a>
+        <a href="installation.html">Installation</a>
+        <a href="troubleshooting.html">Troubleshooting</a>
+        <a href="security.html">Security</a>
+        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">Report an issue</a>
+      </nav>
+    </div>
+    <p class="legal">Proprietary software — all rights reserved. Distributed as a compiled binary; the source code is not publicly available.</p>
+  </div>
+</footer>
+
+</body>
+</html>

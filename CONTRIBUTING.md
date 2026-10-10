@@ -7,8 +7,9 @@ its source code is not hosted here.
 ## What belongs in this repository
 
 - The landing page (`README.md`)
-- Public documentation (`docs/`)
-- Product screenshots and the logo (`assets/`)
+- The website, served with GitHub Pages from `docs/`:
+  [palashsuryavanshi.github.io/localserverexposer_public](https://palashsuryavanshi.github.io/localserverexposer_public/)
+- Product screenshots and the logo (`docs/assets/`)
 - Release notes and downloadable binaries, attached to
   [GitHub Releases](https://github.com/palashsuryavanshi/localserverexposer_public/releases)
 
@@ -25,7 +26,7 @@ history).
 - **Feature request** — open an issue with the
   [enhancement label](https://github.com/palashsuryavanshi/localserverexposer_public/issues/new?labels=enhancement).
 - **Security issue** — use a
-  [private security advisory](docs/privacy-and-security.md#reporting-a-security-issue),
+  [private security advisory](https://github.com/palashsuryavanshi/localserverexposer_public/security/advisories/new),
   not a public issue.
 
 ## Suggesting documentation changes
