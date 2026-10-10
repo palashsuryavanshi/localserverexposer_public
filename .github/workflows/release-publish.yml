@@ -4,14 +4,15 @@
 # Safety properties, by design:
 #   * it runs only on releases that already exist (or a manual re-run), never on
 #     pull requests, so no untrusted change can influence it;
-#   * it uses no third-party actions, no secrets and no write access to any
-#     repository - only the automatic GITHUB_TOKEN with read access to this repo;
-#   * it cannot create, edit or delete a release or an asset;
+#   * it uses no third-party actions and no secrets;
+#   * it needs only read access to this repository - it cannot create, edit or
+#     delete a release, an asset, or any repository content;
 #   * it never touches the private source repository.
 #
 # Publishing is deliberately NOT automated here: release artifacts are produced
 # and uploaded by the maintainer (or by the private repository's release
-# workflow), and this job then independently confirms their integrity.
+# workflow), and this job then independently confirms their integrity. The
+# outcome is written to the workflow run summary.
 
 name: Verify release checksums
 
@@ -33,9 +34,6 @@ jobs:
   verify-checksums:
     name: Verify SHA-256 checksums
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write # only to leave a verification comment on the release
     steps:
       - name: Resolve the release to verify
         id: meta
@@ -49,11 +47,14 @@ jobs:
           if [ -z "$tag" ]; then
             echo "::error::no release tag to verify"; exit 1
           fi
-          id="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$tag" --jq .id)"
           url="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$tag" --jq .html_url)"
-          echo "tag=$tag"    >> "$GITHUB_OUTPUT"
-          echo "id=$id"      >> "$GITHUB_OUTPUT"
-          echo "url=$url"    >> "$GITHUB_OUTPUT"
+          {
+            echo "### Checksum verification for \`$tag\`"
+            echo
+            echo "Release: <$url>"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
 
       - name: Download the published artifacts
         env:
@@ -75,32 +76,22 @@ jobs:
           fi
           # --strict fails both on a mismatch and on a listed file that is absent.
           sha256sum --check --strict SHA256SUMS.txt
-          echo "All published checksums match the uploaded artifacts."
-
-      - name: Comment the outcome on the release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.meta.outputs.tag }}
-          RELEASE_ID: ${{ steps.meta.outputs.id }}
-        run: |
-          set -euo pipefail
-          # A release conversation is an issue thread: the release id is its
-          # issue number, and the issues comments endpoint is the supported one.
-          body=$(printf '%s\n' \
-            '### Checksum verification' \
-            '' \
-            'Every artifact listed in `SHA256SUMS.txt` was downloaded from this' \
-            'release and its SHA-256 recomputed by an automated job; all values' \
-            'matched.' \
-            '' \
-            'Verify a download yourself:' \
-            '' \
-            '```powershell' \
-            'Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256' \
-            '```' \
-            '' \
-            '> These binaries are not code-signed, so SmartScreen will warn on' \
-            '> first run. Verify the checksum before choosing *More info -> Run anyway*.')
-          jq -n --arg body "$body" '{body: $body}' \
-            | gh api "repos/${GITHUB_REPOSITORY}/issues/${RELEASE_ID}/comments" \
-                --method POST --input - --jq '.html_url'
+          {
+            echo
+            echo "| Artifact | SHA-256 |"
+            echo "|---|---|"
+            while read -r hash name; do
+              echo "| \`$name\` | \`$hash\` |"
+            done < SHA256SUMS.txt
+            echo
+            echo "All published checksums match the uploaded artifacts."
+            echo
+            echo "Verify a download yourself:"
+            echo
+            echo '```powershell'
+            echo 'Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256'
+            echo '```'
+            echo
+            echo "> These binaries are not code-signed, so SmartScreen warns on first"
+            echo "> run. Verify the checksum before choosing *More info -> Run anyway*."
+          } >> "$GITHUB_STEP_SUMMARY"
