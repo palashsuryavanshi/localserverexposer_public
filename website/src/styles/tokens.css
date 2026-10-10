@@ -1,0 +1,91 @@
+/* ============================================================================
+   Design tokens
+   One place to change the palette, spacing rhythm, radii and motion.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --bg: #090b10;
+  --bg-soft: #0e1118;
+  --card: #131722;
+  --elevated: #191f2c;
+  --line: #222a3a;
+  --line-soft: #1a2130;
+
+  /* Text */
+  --text: #f3f5f9;
+  --text-soft: #c7cfdd;
+  --muted: #9aa4b5;
+  --muted-soft: #7b8494;
+
+  /* Accents */
+  --accent: #7c6bff;
+  --accent-soft: #9b8dff;
+  --accent-dim: rgba(124, 107, 255, 0.14);
+  --accent-line: rgba(124, 107, 255, 0.38);
+  --cyan: #35d6e8;
+  --cyan-dim: rgba(53, 214, 232, 0.13);
+  --cyan-line: rgba(53, 214, 232, 0.34);
+
+  /* Status */
+  --ok: #46b96b;
+  --ok-dim: rgba(70, 185, 107, 0.13);
+  --warn: #d9a441;
+  --warn-dim: rgba(217, 164, 65, 0.12);
+  --danger: #e05561;
+  --danger-dim: rgba(224, 85, 97, 0.12);
+
+  /* Type */
+  --font-sans: "Segoe UI Variable Display", "Segoe UI", Inter, -apple-system,
+    BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Cascadia Mono", "Cascadia Code", ui-monospace, SFMono-Regular,
+    "SF Mono", Consolas, "Liberation Mono", monospace;
+
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
+  --step-1: clamp(1.1rem, 1.04rem + 0.3vw, 1.25rem);
+  --step-2: clamp(1.3rem, 1.18rem + 0.6vw, 1.7rem);
+  --step-3: clamp(1.65rem, 1.4rem + 1.2vw, 2.5rem);
+  --step-4: clamp(2.05rem, 1.55rem + 2.4vw, 3.4rem);
+
+  /* Space */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+
+  /* Shape */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 30px -12px rgba(0, 0, 0, 0.65);
+  --shadow-lg: 0 32px 70px -24px rgba(0, 0, 0, 0.75);
+
+  --container: 1160px;
+  --prose: 68ch;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 420ms;
+
+  --header-h: 60px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+  }
+}

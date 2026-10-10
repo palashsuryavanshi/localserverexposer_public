@@ -1,141 +1,49 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Installation — Local Server Exposer</title>
-<meta name="description" content="Install Local Server Exposer 1.0.0 on Windows 10/11 x64: per-user install with no administrator rights, checksum verification, first launch and uninstall instructions.">
-<link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/installation.html">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Installation — Local Server Exposer">
-<meta property="og:description" content="Per-user Windows install, checksum verification, first launch and uninstall.">
-<meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/installation.html">
-<link rel="icon" href="assets/logo.png" type="image/png">
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html"><img src="assets/logo.png" alt="">Local Server Exposer</a>
-    <nav class="site-nav">
-      <a href="index.html">Home</a>
-      <a href="getting-started.html">Getting started</a>
-      <a href="installation.html" aria-current="page">Installation</a>
-      <a href="troubleshooting.html">Troubleshooting</a>
-      <a href="security.html">Security</a>
-      <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">Downloads</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <div class="page-head">
-    <p class="breadcrumbs"><a href="index.html">Home</a> / Installation</p>
-    <h1>Installation</h1>
-    <p>
-      Local Server Exposer is a <strong>per-user Windows application</strong>.
-      Installation needs no administrator rights and does not change
-      system-wide state.
-    </p>
-  </div>
-
-  <section>
-    <div class="prose">
-
-      <h2>Requirements</h2>
-      <table>
-        <tr><th>Operating system</th><td>Windows 10 or 11, 64-bit (x64)</td></tr>
-        <tr><th>Disk</th><td>About 3&nbsp;MB for the installer</td></tr>
-        <tr><th>Other software</th><td>Microsoft Edge WebView2 Runtime — normally already present; the installer offers to fetch it if missing</td></tr>
-        <tr><th>Internet</th><td>Needed to start a tunnel, and once to download the tunnel client (~55&nbsp;MB)</td></tr>
-      </table>
-      <p>ARM64 and non-Windows platforms are <strong>not supported</strong>.</p>
-
-      <h2>Install the latest release</h2>
-      <ol class="steps">
-        <li>Open the <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">releases page</a> and download <code>LocalServerExposer_1.0.0_x64-setup.exe</code>.</li>
-        <li>Run the installer — it is a <strong>per-user install</strong>, so no administrator prompt appears.</li>
-        <li>Launch <strong>Local Server Exposer</strong> from the Start Menu.</li>
-      </ol>
-
-      <p>What the installer does:</p>
-      <ul>
-        <li>installs the app under <code>%LOCALAPPDATA%\Local Server Exposer</code>;</li>
-        <li>adds a Start Menu shortcut;</li>
-        <li>registers an uninstall entry under <em>Settings → Apps → Installed apps</em>;</li>
-        <li>installs the Microsoft Visual C++ runtime the app needs;</li>
-        <li>offers to install the WebView2 runtime if it is missing.</li>
-      </ul>
-
-      <p>
-        Your settings, logs and the optional tunnel client live in a
-        <strong>separate</strong> folder,
-        <code>%APPDATA%\com.localexp.local-server-exposer\</code>, so uninstalling
-        the application does not delete them.
-      </p>
-
-      <h2>Verify the download</h2>
-      <p>
-        Each release publishes a <code>SHA256SUMS.txt</code>. To check the
-        installer in PowerShell:
-      </p>
-      <pre><code>Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256</code></pre>
-      <p>Compare the result with the published value:</p>
-      <pre><code>f9c5b14266ea4ca4f337bc07053c6e3a160ead384286a82e75ecbc01a00c12a4  LocalServerExposer_1.0.0_x64-setup.exe</code></pre>
-
-      <div class="callout warn">
-        <p>
-          The binaries are <strong>not code-signed</strong>, so Windows
-          SmartScreen shows an "unrecognized app" warning on first run. Verify
-          the checksum before choosing <em>More info → Run anyway</em>.
-        </p>
-      </div>
-
-      <h2>First launch</h2>
-      <ul>
-        <li>The window opens in about a second and starts scanning for local servers.</li>
-        <li>The tray icon appears; closing the window keeps the app in the background.</li>
-        <li>The first time you expose a server, the app asks before downloading the <code>cloudflared</code> client. That download is explicit and never happens at install time.</li>
-      </ul>
-
-      <h2>Upgrade</h2>
-      <p>
-        Run a newer installer over the existing one. Settings, favorites and
-        logs are preserved. To move back to an older build, uninstall first —
-        the installer blocks downgrades by default.
-      </p>
-
-      <h2>Uninstall</h2>
-      <ol class="steps">
-        <li><em>Settings → Apps → Installed apps → Local Server Exposer → Uninstall</em>, or the <em>Uninstall</em> shortcut in the Start Menu folder.</li>
-        <li>The application, its shortcut and its uninstall entry are removed.</li>
-        <li>Your data in <code>%APPDATA%\com.localexp.local-server-exposer\</code> is <strong>kept</strong> — delete that folder manually for a complete removal.</li>
-        <li>Any running tunnels are stopped when the application exits.</li>
-      </ol>
-
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="cols">
-      <div><strong>Local Server Exposer</strong><br>Maintained by <a href="https://github.com/palashsuryavanshi">palashsuryavanshi</a></div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="getting-started.html">Getting started</a>
-        <a href="installation.html">Installation</a>
-        <a href="troubleshooting.html">Troubleshooting</a>
-        <a href="security.html">Security</a>
-        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">Report an issue</a>
-      </nav>
-    </div>
-    <p class="legal">Proprietary software — all rights reserved. Distributed as a compiled binary; the source code is not publicly available.</p>
-  </div>
-</footer>
-
-</body>
-</html>
+<!doctype html><html lang="en"><head><script>window.__LSE_RELEASE__={"state":"ready","tag":"v1.0.0","version":"1.0.0","name":"Local Server Exposer 1.0.0 (Windows x64)","url":"https://github.com/palashsuryavanshi/localserverexposer_public/releases/tag/v1.0.0","publishedAt":"2026-10-10T18:18:36Z","asset":{"name":"LocalServerExposer_1.0.0_x64-setup.exe","size":2914395,"sizeText":"2.78 MB","url":"https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe"},"fetchedAt":"2026-10-10T19:20:01.751Z"};window.__LSE_RELEASE_API__="https://api.github.com/repos/palashsuryavanshi/localserverexposer_public/releases/latest";</script><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Installation — Local Server Exposer</title><meta name="description" content="Install the Local Server Exposer Windows application: requirements, per-user installation, download verification, upgrade and uninstall." /><link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/installation.html" /><meta name="theme-color" content="#090b10" /><meta name="color-scheme" content="dark" /><meta name="referrer" content="strict-origin-when-cross-origin" /><meta property="og:type" content="website" /><meta property="og:site_name" content="Local Server Exposer" /><meta property="og:title" content="Installation — Local Server Exposer" /><meta property="og:description" content="Install the Local Server Exposer Windows application: requirements, per-user installation, download verification, upgrade and uninstall." /><meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/installation.html" /><meta property="og:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/og-image.png" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Local Server Exposer showing discovered local development servers and a running Cloudflare Quick Tunnel" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="Installation — Local Server Exposer" /><meta name="twitter:description" content="Install the Local Server Exposer Windows application: requirements, per-user installation, download verification, upgrade and uninstall." /><meta name="twitter:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/og-image.png" /><link rel="icon" href="assets/favicon.svg" type="image/svg+xml" /><link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png" /><link rel="apple-touch-icon" href="assets/apple-touch-icon.png" /><link rel="stylesheet" href="assets/site.css" /><script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Local Server Exposer",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows 10, Windows 11",
+        "description": "Discover local development servers, manage Cloudflare Quick Tunnels, and access your projects from external devices using a convenient Windows desktop application.",
+        "url": "https://palashsuryavanshi.github.io/localserverexposer_public/",
+        "downloadUrl": "https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe",
+        "softwareVersion": "1.0.0",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "maintainer": { "@type": "Person", "name": "palashsuryavanshi", "url": "https://github.com/palashsuryavanshi" }
+      }
+    </script></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container site-header__inner"><a class="brand" href="index.html" aria-label="Local Server Exposer — home"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6" /><path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round" /><circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8" /></svg><span>Local Server Exposer</span></a><nav class="nav" id="primary-nav" aria-label="Primary"><a href="index.html#features">Features</a><a href="index.html#how-it-works">How it works</a><a href="index.html#security">Security</a><a href="index.html#faq">FAQ</a><a class="nav-github" href="https://github.com/palashsuryavanshi/localserverexposer_public" target="_blank" rel="noopener">GitHub</a></nav><div class="header-actions"><a class="btn btn--ghost btn-ghost" href="https://github.com/palashsuryavanshi/localserverexposer_public" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.21 1.87.86 2.33.66.07-.52.28-.86.5-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>GitHub</span></a><a class="btn btn--primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" data-download-cta><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5v8.2l2.9-2.9 1.06 1.06L8 12.06 4.04 7.86 5.1 6.8l2.9 2.9V1.5h1ZM2.5 12.5h11v1.6h-11z"/></svg><span>Download</span></a><button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="Open navigation menu"
+          ><svg class="icon-menu" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg><svg class="icon-close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div></div></header><main id="main"><div class="page-head"><div class="container"><p class="breadcrumbs"><a href="index.html">Home</a> / Installation</p><h1>Installation</h1><p>A per-user Windows application: one installer, no administrator prompt, no bundled third-party binaries.</p></div></div><div class="container doc-layout"><article class="prose"><h2 id="requirements">Requirements</h2><div class="table-wrap"><table><tr><th>Item</th><th>Value</th></tr><tr><td>Operating system</td><td>Windows 10 or Windows 11, 64-bit</td></tr><tr><td>Architecture</td><td>x64 — No ARM64 or 32-bit build.</td></tr><tr><td>Administrator rights</td><td>Not required — The installer is per-user.</td></tr><tr><td>Runtime</td><td>Microsoft Edge WebView2 — Normally already installed.</td></tr><tr><td>Internet</td><td>Required to start a tunnel — And once, to fetch the tunnel client.</td></tr><tr><td>Internet</td><td>Required to start a tunnel, and once to download the tunnel client.</td></tr></table></div><h2 id="install">Install</h2><ol class="steps"><li class="step"><div><h4>Open the latest release</h4><p>Go to the releases page and pick the newest published version.</p></div></li><li class="step"><div><h4>Download the Windows installer</h4><p>Download the published .exe installer for your architecture.</p></div></li><li class="step"><div><h4>Run it</h4><p>Launch the installer and follow the prompts. Installation details depend on how the build is packaged.</p></div></li></ol><p>
+          The latest release is always on the
+          <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">releases page</a>. The
+          <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases/latest" target="_blank" rel="noopener">latest release page</a>
+          always points at the current version.
+        </p><div class="callout callout--warn"><p><strong>The binaries are not code-signed.</strong> Windows SmartScreen will show an
+            unfamiliar-app warning on first run, and the application has no publisher
+            reputation. Verify the published SHA-256 checksum before choosing
+            <em>More info → Run anyway</em>. Never disable antivirus or Windows security
+            protections to install it.
+          </p></div><h2 id="verify">Verify what you downloaded</h2><p>Each release publishes a <code>SHA256SUMS.txt</code>. Compare it with your download:</p><pre><code>Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256</code></pre><p>
+          The published line looks like this — the hash must match exactly:
+        </p><pre><code>&lt;sha256&gt;  LocalServerExposer_1.0.0_x64-setup.exe</code></pre><p>
+          A scheduled workflow re-checks the published checksums after every release and
+          records the result in the Actions tab of the repository.
+        </p><h2 id="first-launch">First launch</h2><ul><li>The window opens in about a second and immediately begins scanning.</li><li>A tray icon appears; closing the window keeps the app in the background.</li><li>The first time you expose a server, the app asks before downloading the
+            <code>cloudflared</code> client. That download is explicit and never happens at
+            install time.</li></ul><h2 id="upgrade">Upgrade</h2><p>
+          Run the newer installer over the existing one. Settings, favorites and logs are
+          preserved. To move back to an older build, uninstall first — the installer blocks
+          downgrades by default.
+        </p><h2 id="uninstall">Uninstall</h2><ol class="steps"><li class="step"><div><h4>Use Windows</h4><p><em>Settings → Apps → Installed apps → Local Server Exposer → Uninstall</em>, or the Uninstall shortcut in the Start Menu folder.</p></div></li><li class="step"><div><h4>What disappears</h4><p>The application, its shortcut and its uninstall entry. Any running tunnels stop.</p></div></li><li class="step"><div><h4>What stays</h4><p>Your settings, logs and the downloaded tunnel client in <code>%APPDATA%\com.localexp.local-server-exposer\</code>. Delete that folder for a complete removal.</p></div></li></ol><p><a class="link-arrow" href="troubleshooting.html">Installation problems <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg></a></p></article><aside class="doc-aside" aria-label="On this page"><a href="#requirements">Requirements</a><a href="#install">Install</a><a href="#verify">Verify the download</a><a href="#first-launch">First launch</a><a href="#upgrade">Upgrade</a><a href="#uninstall">Uninstall</a></aside></div></main><footer class="site-footer"><div class="container"><div class="site-footer__grid"><div class="site-footer__brand"><a class="brand" href="index.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6" /><path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round" /><circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8" /></svg><span>Local Server Exposer</span></a><p class="site-footer__desc">
+              Your local servers, accessible anywhere. A Windows desktop application for
+              discovering local development servers and sharing them through Cloudflare Quick
+              Tunnels.
+            </p></div><nav aria-label="Product"><h2>Product</h2><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how-it-works">How it works</a></li><li><a href="index.html#security">Security</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#download">Download</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">All releases</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues/new" target="_blank" rel="noopener">Report an issue</a></li></ul></nav><nav aria-label="Resources"><h2>Resources</h2><ul><li><a href="index.html#download">Installation</a></li><li><a href="index.html#how-it-works">How it works</a></li><li><a href="security.html">Security &amp; privacy</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues/new" target="_blank" rel="noopener">Report a bug</a></li></ul></nav></div><div class="site-footer__legal"><span>&copy; 2026 palashsuryavanshi. All rights reserved.</span><span>
+            Proprietary software distributed as a compiled binary; the application source code
+            is not public. See <a href="https://github.com/palashsuryavanshi/localserverexposer_public/blob/main/LICENSE">LICENSE</a>.
+          </span></div></div></footer><script src="assets/site.js" defer></script></body></html>

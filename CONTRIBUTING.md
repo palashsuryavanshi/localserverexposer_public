@@ -7,11 +7,17 @@ its source code is not hosted here.
 ## What belongs in this repository
 
 - The landing page (`README.md`)
-- The website, served with GitHub Pages from `docs/`:
+- The website source (`website/`) and its built output (`docs/`), served with
+  GitHub Pages from `docs/`:
   [palashsuryavanshi.github.io/localserverexposer_public](https://palashsuryavanshi.github.io/localserverexposer_public/)
-- Product screenshots and the logo (`docs/assets/`)
+- Product screenshots and icons (`website/assets-source/` and the generated
+  files in `docs/assets/`)
 - Release notes and downloadable binaries, attached to
   [GitHub Releases](https://github.com/palashsuryavanshi/localserverexposer_public/releases)
+
+`docs/` is generated output — do not edit it by hand. Change `website/src/`,
+`website/site.config.js` or `website/static/`, then run `npm run build` and
+`npm run check` inside `website/` and commit the regenerated `docs/`.
 
 **Never commit here:** application source code, build configuration, `.git`
 directories of other repositories, credentials, signing keys, private
@@ -38,6 +44,9 @@ Documentation pull requests are welcome. Please:
 - use real screenshots of the current version, captured locally, never mock-ups
   presented as real;
 - keep every download link pointing at this repository's Releases page;
+- put repository URLs and product facts in `website/site.config.js` rather than
+  hardcoding them in a template;
+- run `npm test` and `npm run check` in `website/` before submitting;
 - update the version references if they appear.
 
 ## Code contributions

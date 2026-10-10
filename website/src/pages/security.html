@@ -1,0 +1,117 @@
+<div class="page-head">
+      <div class="container">
+        <p class="breadcrumbs"><a href="index.html">Home</a> / Security &amp; privacy</p>
+        <h1>Security &amp; privacy</h1>
+        <p>What happens when you expose a local server, what the application enforces on your behalf, and where the limits are.</p>
+      </div>
+    </div>
+
+    <div class="container doc-layout">
+      <article class="prose">
+        <div class="callout callout--warn">
+          <p>
+            <strong>Exposing a server makes it reachable from the public internet.</strong> A
+            Quick Tunnel URL is unguessable but <em>bearer access</em>: anyone who obtains it can
+            reach your service until you stop the tunnel. Nothing here turns an unfinished
+            development server into a safe production service.
+          </p>
+        </div>
+
+        <h2 id="what-happens">What happens when you expose a server</h2>
+        <p>
+          Local Server Exposer starts a Cloudflare Quick Tunnel: your local port is bridged to
+          an ephemeral public HTTPS address on <code>*.trycloudflare.com</code>, served through
+          Cloudflare's network.
+        </p>
+        <ul>
+          <li><strong>The URL is the credential.</strong> The hostname is random, but anyone holding the link can send requests to your service while the tunnel runs.</li>
+          <li><strong>Your server sees real traffic</strong> — original paths, headers and body. An unauthenticated admin endpoint on your dev server becomes a public admin endpoint.</li>
+          <li><strong>Cloudflare sees the traffic</strong>, as any reverse proxy must. Their terms apply to it.</li>
+          <li><strong>Quick Tunnels are for development.</strong> Anonymous, no custom hostname, no account, not a production front end.</li>
+        </ul>
+        <p>Stopping the tunnel ends it: the address stops reaching your machine as soon as the tunnel process exits.</p>
+
+        <h2 id="enforced">What the application enforces</h2>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Property</th><th>How it works</th></tr>
+            <tr><td>Confirmation before every exposure</td><td>A dialog names the port, URL and process. No permanent opt-out.</td></tr>
+            <tr><td>Only HTTP/HTTPS can be exposed</td><td>The app re-probes the target immediately before starting a tunnel and refuses anything that does not answer as a web server — regardless of what the interface says.</td></tr>
+            <tr><td>Loopback targets only</td><td>Discovery and probing cover <code>127.0.0.0/8</code> and the <code>0.0.0.0</code> wildcard. Remote hosts are never probed or exposed.</td></tr>
+            <tr><td>Tunnels never outlive the app</td><td>Each tunnel process is attached to a Windows Job Object that terminates its members when the application process ends — including crash, forced kill and sign-out.</td></tr>
+            <tr><td>No shell execution</td><td>Process arguments are fixed and built in the backend. The interface has no shell, filesystem or arbitrary-process capability.</td></tr>
+            <tr><td>Tunnel client verification</td><td>Checked for plausible size, PE executable format and a parseable <code>--version</code> — before first use and again before every tunnel.</td></tr>
+          </table>
+        </div>
+
+        <h2 id="data">Local data and privacy</h2>
+        <p>Everything the application stores lives in <code>%APPDATA%\com.localexp.local-server-exposer\</code>:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Item</th><th>Contents</th></tr>
+            <tr><td><code>config.json</code></td><td>Interface preferences, favourite ports, scan interval, autostart flag. No credentials.</td></tr>
+            <tr><td><code>logs\</code></td><td>Daily rotating files with seven-day retention, plus <code>panic.log</code> if the app ever crashes. Tunnel URLs are redacted before writing; response bodies, headers and cookies are never logged.</td></tr>
+            <tr><td><code>cloudflared.exe</code></td><td>The tunnel client, present only if you chose to install it, and verified before use.</td></tr>
+          </table>
+        </div>
+        <p>
+          The application makes no analytics or telemetry calls. Its network activity is limited
+          to the tunnel itself and, once, the tunnel-client download you approve.
+        </p>
+        <p>
+          One caveat worth stating plainly: Windows toast notifications are kept in the Windows
+          notification history until dismissed, and a tunnel notification includes the public
+          URL. On a shared machine, clear notification history if that matters to you.
+        </p>
+
+        <h2 id="integrity">Integrity of the download</h2>
+        <p>
+          Every release publishes a <code>SHA256SUMS.txt</code>, and an automated workflow
+          re-downloads the assets and recomputes each checksum after publication, failing if
+          anything does not match.
+        </p>
+        <p>
+          The binaries are <strong>not Authenticode-signed</strong>. That means SmartScreen
+          warnings and no publisher reputation; authenticity rests on the published checksum and
+          on downloading only from the
+          <a href="{{ urls.releases }}" target="_blank" rel="noopener">releases page</a>.
+        </p>
+
+        <h2 id="limits">Known limitations</h2>
+        <ul>
+          <li><strong>Tunnel URLs are bearer credentials.</strong> Inherent to how the model works.</li>
+          <li><strong>No checksum pinning for the tunnel client.</strong> Cloudflare publishes no checksum file at the download URL used, so identity rests on HTTPS, file format and the <code>--version</code> output.</li>
+          <li><strong>Self-signed HTTPS origins</strong> are reached with TLS verification relaxed, for loopback targets only.</li>
+          <li><strong>No third-party tunnel modes.</strong> Named tunnels, custom hostnames and Cloudflare Access are not supported in 1.0.0.</li>
+          <li><strong>Local machine only.</strong> If your computer is off or disconnected, the public URL stops serving. This is a development tool, not hosting.</li>
+        </ul>
+
+        <h2 id="assurance">What kind of assurance this is</h2>
+        <p>
+          The application has been through an internal threat-model review covering
+          accidental exposure, command injection, path traversal, malicious local services and
+          orphaned tunnels. It has <strong>not</strong> been penetration tested, audited or
+          certified by an independent third party, and no malware-free status is claimed. A
+          clean antivirus scan on the build machine is a sanity check, not a guarantee.
+        </p>
+
+        <h2 id="report">Reporting a security issue</h2>
+        <p>
+          Report it privately through
+          <a href="{{ urls.repo }}/security/advisories/new" target="_blank" rel="noopener">GitHub Security Advisories</a>
+          rather than in a public issue, and allow the maintainer reasonable time to ship a fix
+          before disclosing details. <strong>Never include a live tunnel URL</strong> — treat it
+          as a password.
+        </p>
+      </article>
+
+      <aside class="doc-aside" aria-label="On this page">
+        <a href="#what-happens">What happens when you expose</a>
+        <a href="#enforced">What the app enforces</a>
+        <a href="#data">Local data and privacy</a>
+        <a href="#integrity">Integrity of the download</a>
+        <a href="#limits">Known limitations</a>
+        <a href="#assurance">Kind of assurance</a>
+        <a href="#report">Report an issue</a>
+      </aside>
+    </div>

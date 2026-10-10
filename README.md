@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/logo.png" alt="Local Server Exposer logo" width="128" />
+<img src="docs/assets/app-icon.webp" alt="Local Server Exposer application icon" width="128" />
 
 # Local Server Exposer
 
@@ -50,10 +50,10 @@ machine and exposes selected ones through **Cloudflare Quick Tunnels**.
 
 | Servers | Confirmation | Running tunnel | Tunnels | Settings |
 |---|---|---|---|---|
-| ![Servers](docs/assets/screenshot-main.png) | ![Expose confirmation](docs/assets/screenshot-confirm.png) | ![Tunnel running](docs/assets/screenshot-tunnel.png) | ![Tunnels page](docs/assets/screenshot-tunnels-page.png) | ![Settings](docs/assets/screenshot-settings.png) |
+| ![Servers](docs/assets/app-servers.webp) | ![Expose confirmation](docs/assets/app-confirm.webp) | ![Tunnel running](docs/assets/app-tunnel.webp) | ![Tunnels page](docs/assets/app-tunnels.webp) | ![Settings](docs/assets/app-settings.webp) |
 
 <sub>Captured from version 1.0.0. The Quick Tunnel URL visible in the
-"screenshot-tunnel" image belonged to a tunnel that was stopped immediately
+"app-tunnel" image belonged to a tunnel that was stopped immediately
 after the capture.</sub>
 
 ## Quick start
@@ -102,10 +102,32 @@ Exposer. It contains documentation, screenshots and release downloads. The
 application is distributed as a compiled binary; **its source code is not
 publicly available.**
 
-- Website source: [`docs/`](docs) — served with GitHub Pages
 - Website: <https://palashsuryavanshi.github.io/localserverexposer_public/>
+- Website source: [`website/`](website) — templates, styles, scripts, config
+- Built site: [`docs/`](docs) — generated output, served with GitHub Pages
 - Issues and feature requests: [GitHub issues](https://github.com/palashsuryavanshi/localserverexposer_public/issues)
 - How contributions are handled: [CONTRIBUTING.md](CONTRIBUTING.md)
+
+### Working on the website
+
+`docs/` is generated — do not edit it by hand. Edit the sources in
+`website/`, then rebuild:
+
+```bash
+cd website
+npm install      # no dependencies, but enables the scripts
+npm run build    # render docs/
+npm run check    # links, assets, headings, alt text, landmarks
+npm test         # template engine unit tests
+npm run dev      # build and serve on http://localhost:4321
+```
+
+Every repository URL, product fact and page section lives in
+[`website/site.config.js`](website/site.config.js). Release metadata is read
+from the public GitHub Releases API at build time and refreshed in the browser;
+if it cannot be retrieved the page falls back to linking the releases page rather
+than showing a made-up version. See [`website/README.md`](website/README.md) for
+the full description.
 
 ## License
 

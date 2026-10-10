@@ -1,0 +1,42 @@
+<section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Capabilities</span>
+          <h2>Everything a tunnel CLI does, without the terminal</h2>
+          <p>
+            Six capabilities, all present in 1.0.0. Nothing here is queued for a future
+            release — this is what the shipped application does today.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          {{#each FEATURES}}
+          <article class="card card--hover" data-reveal>
+            <span class="card__icon" aria-hidden="true">
+              {{#if this.icon == 'server'}}
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2.5" y="3.5" width="15" height="5" rx="1.4"/><rect x="2.5" y="11.5" width="15" height="5" rx="1.4"/><path d="M5 6h.01M5 14h.01"/></svg>
+              {{/if}}
+              {{#if this.icon == 'network'}}
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4.5" cy="10" r="2"/><circle cx="15.5" cy="5" r="2"/><circle cx="15.5" cy="15" r="2"/><path d="M6.4 9.1 13.6 5.9M6.4 10.9l7.2 3.2"/></svg>
+              {{/if}}
+              {{#if this.icon == 'external-link'}}
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4h5v5M16 4l-7 7"/><path d="M14 11.5V15a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 15V7.5A1.5 1.5 0 0 1 5 6h3.5"/></svg>
+              {{/if}}
+              {{#if this.icon == 'monitor'}}
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2.5" y="3.5" width="15" height="10" rx="1.6"/><path d="M7 16.5h6M10 13.5v3"/></svg>
+              {{/if}}
+              {{#if this.icon == 'layers'}}
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M10 2.8 17 6.4 10 10 3 6.4l7-3.6Z"/><path d="m3 10 7 3.6 7-3.6M3 13.6 10 17.2l7-3.6"/></svg>
+              {{/if}}
+              {{#if this.icon == 'shield'}}
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.6 16 5v5c0 3.6-2.5 6.2-6 7-3.5-.8-6-3.4-6-7V5l6-2.4Z"/><path d="m7.6 10 1.7 1.7 3.2-3.4"/></svg>
+              {{/if}}
+            </span>
+            <h3>{{ this.title }}</h3>
+            <p class="card__lede">{{ this.lede }}</p>
+            <p>{{ this.body }}</p>
+          </article>
+          {{/each}}
+        </div>
+      </div>
+    </section>

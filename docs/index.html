@@ -1,289 +1,161 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Local Server Exposer — Share your local dev server with the internet</title>
-<meta name="description" content="A free Windows desktop app that finds the HTTP servers running on your machine and gives selected ones a public https://*.trycloudflare.com URL through Cloudflare Quick Tunnels. No router changes, no port forwarding.">
-<link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Local Server Exposer — share your local dev server">
-<meta property="og:description" content="Expose a local development server through a Cloudflare Quick Tunnel in one click. Windows 10/11 x64.">
-<meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/">
-<meta property="og:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/screenshot-main.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/logo.png" type="image/png">
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html">
-      <img src="assets/logo.png" alt="">
-      Local Server Exposer
-    </a>
-    <nav class="site-nav">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="getting-started.html">Getting started</a>
-      <a href="installation.html">Installation</a>
-      <a href="troubleshooting.html">Troubleshooting</a>
-      <a href="security.html">Security</a>
-      <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">Downloads</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-  <section class="hero">
-    <div class="wrap">
-      <img class="logo" src="assets/logo.png" alt="Local Server Exposer logo" width="108" height="108">
-      <h1>Share your local dev server with the world</h1>
-      <p class="lead">
-        A lightweight Windows app that finds the HTTP servers running on your
-        machine and gives the one you choose a public
-        <code>https://….trycloudflare.com</code> URL. No router changes, no port
-        forwarding, no public IP.
-      </p>
-      <div class="cta">
-        <a class="btn btn-primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe">Download for Windows</a>
-        <a class="btn btn-secondary" href="getting-started.html">See how it works</a>
-      </div>
-      <p class="note">Version 1.0.0 · 2.78&nbsp;MB per-user installer · Windows 10/11 x64</p>
-      <div class="badges">
-        <span class="badge-chip">No router configuration</span>
-        <span class="badge-chip">No account required</span>
-        <span class="badge-chip">No telemetry</span>
-        <span class="badge-chip">Source not public</span>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>The problem</h2>
-      <p class="section-intro">
-        You started a dev server on <code>localhost:3000</code>. A client, a
-        teammate on another network, or a webhook needs to reach it. The usual
-        answers are all awkward: a tunnel CLI in another terminal, router port
-        forwarding, or deploying a preview build somewhere else.
-      </p>
-      <p>
-        Local Server Exposer puts that in one small desktop app: it lists what
-        is actually listening on your machine, and one click turns a chosen
-        server into a public HTTPS URL.
-      </p>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>See it in action</h2>
-      <p class="section-intro">Real screenshots from version 1.0.0.</p>
-
-      <div class="shot-grid">
-        <figure class="shot shot-wide">
-          <img src="assets/screenshot-main.png" alt="The Servers page listing local listeners with Ready and Unsupported states and an Expose button on each card" loading="lazy">
-          <figcaption>Every loopback listener, classified, with the process that owns it.</figcaption>
-        </figure>
-
-        <figure class="shot">
-          <img src="assets/screenshot-confirm.png" alt="A confirmation dialog warning that the server becomes reachable from the public internet, showing the URL and process" loading="lazy">
-          <figcaption>Sharing is never accidental: every exposure is confirmed.</figcaption>
-        </figure>
-
-        <figure class="shot">
-          <img src="assets/screenshot-tunnel.png" alt="A server card labelled Exposed showing a public trycloudflare.com URL with Copy, Open and Stop buttons" loading="lazy">
-          <figcaption>The public URL appears only once the tunnel is really serving.</figcaption>
-        </figure>
-
-        <figure class="shot">
-          <img src="assets/screenshot-tunnels-page.png" alt="The Tunnels page listing one running tunnel with its status, start time and action buttons" loading="lazy">
-          <figcaption>All active tunnels, with status and start time.</figcaption>
-        </figure>
-
-        <figure class="shot">
-          <img src="assets/screenshot-settings.png" alt="The Settings page with discovery options, scan interval, cloudflared management and preference toggles" loading="lazy">
-          <figcaption>Scan tuning, cloudflared management and preferences.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>What it does</h2>
-      <p class="section-intro">
-        Every item below is implemented in 1.0.0 — nothing is a placeholder.
-      </p>
-      <div class="grid">
-        <div class="card">
-          <h3>Automatic discovery</h3>
-          <p>Reads your machine's IPv4 listening sockets through the native Windows TCP table and shows the owning process for each port.</p>
-        </div>
-        <div class="card">
-          <h3>Honest classification</h3>
-          <p>Each port is probed and labelled <em>Ready</em> (HTTP/HTTPS), <em>Unsupported</em>, or <em>Unreachable</em> — with a plain-language reason. Only HTTP/HTTPS can be shared.</p>
-        </div>
-        <div class="card">
-          <h3>One-click Quick Tunnels</h3>
-          <p>Exposes the selected port at an ephemeral <code>*.trycloudflare.com</code> URL, with copy, open-in-browser and stop.</p>
-        </div>
-        <div class="card">
-          <h3>Confirmation every time</h3>
-          <p>Every new tunnel and every retry asks first, naming the exact port and process. There is no "don't ask again".</p>
-        </div>
-        <div class="card">
-          <h3>Several tunnels at once</h3>
-          <p>Each exposed port gets its own independent tunnel. Stopping one leaves the others running.</p>
-        </div>
-        <div class="card">
-          <h3>Never left behind</h3>
-          <p>Tunnels are tied to the app: they stop when it exits and cannot survive a crash, a forced kill or a sign-out.</p>
-        </div>
-        <div class="card">
-          <h3>System tray &amp; notifications</h3>
-          <p>Closing the window keeps it in the tray. You get a desktop notification when a tunnel goes live or fails.</p>
-        </div>
-        <div class="card">
-          <h3>Search, filters, favorites</h3>
-          <p>Search by port, process name or detected framework. Filter by HTTP, exposed or available. Star the ports you use.</p>
-        </div>
-        <div class="card">
-          <h3>Settings that persist</h3>
-          <p>Scan interval, discovery options, favorites, start-with-Windows, and where to find the tunnel client.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>Quick start</h2>
-      <p class="section-intro">Three steps, about a minute.</p>
-      <ol class="steps prose">
-        <li><strong>Start your local server</strong> — for example something serving on <code>http://localhost:3000</code>.</li>
-        <li><strong>Open the app.</strong> The port appears as a card with its process and the status <em>Ready</em>.</li>
-        <li><strong>Click Expose, confirm, and wait</strong> for the public URL, then copy it or open it in your browser.</li>
-      </ol>
-      <p><a class="btn btn-secondary" href="getting-started.html">Full walkthrough</a></p>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>System requirements</h2>
-      <div class="prose">
-        <table>
-          <tr><th>Operating system</th><td>Windows 10 or 11, 64-bit (x64). ARM64 and non-Windows are not supported.</td></tr>
-          <tr><th>Memory</th><td>About 40&nbsp;MB for the app; the WebView2 runtime adds roughly 300&nbsp;MB.</td></tr>
-          <tr><th>Disk</th><td>About 3&nbsp;MB installed, plus a one-off ~55&nbsp;MB download of the tunnel client if you approve it.</td></tr>
-          <tr><th>Other software</th><td>Microsoft Edge WebView2 Runtime — normally already installed on Windows 10/11. The installer offers to fetch it if missing.</td></tr>
-          <tr><th>Internet</th><td>Needed to start a tunnel, and once to download the tunnel client.</td></tr>
-          <tr><th>Administrator rights</th><td>Not required. The install is per-user.</td></tr>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>Security, in plain language</h2>
-      <div class="prose">
-        <div class="callout warn">
-          <p><strong>Exposing a server makes it reachable from the public internet.</strong></p>
-          <p>A Quick Tunnel URL is unguessable but <em>bearer access</em>: anyone who has the link can reach your server until you stop the tunnel. Treat it like a password — do not post it, and do not put it in a bug report.</p>
-        </div>
-        <ul>
-          <li><strong>Confirm every exposure.</strong> Every tunnel and retry asks for confirmation, showing the exact port and process.</li>
-          <li><strong>Only HTTP and HTTPS can be shared</strong>, re-checked by the app itself immediately before each tunnel starts. Databases, SSH and admin ports are refused.</li>
-          <li><strong>Tunnels never outlive the app</strong>, so a public URL cannot keep serving without supervision.</li>
-          <li><strong>No telemetry and no analytics.</strong> Local logs are kept for 7 days with tunnel URLs redacted before anything is written.</li>
-          <li><strong>The installer is not code-signed</strong>, so Windows SmartScreen warns on first run. Verify the published SHA-256 checksum before choosing <em>More info → Run anyway</em>.</li>
-        </ul>
-        <p><a href="security.html">Read the full security and privacy notes</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>Download</h2>
-      <div class="prose">
-        <table class="download">
-          <tr><th>File</th><th>Size</th><th>SHA-256</th></tr>
-          <tr>
-            <td><code>LocalServerExposer_1.0.0_x64-setup.exe</code></td>
-            <td>2.78 MB</td>
-            <td class="sha">f9c5b14266ea4ca4f337bc07053c6e3a160ead384286a82e75ecbc01a00c12a4</td>
-          </tr>
-        </table>
-        <p>
-          <a class="btn btn-primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe">Download v1.0.0</a>
-        </p>
-        <p>
-          Older and newer builds, plus the checksum file, are on the
-          <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">releases page</a>.
-          Every release is verified automatically by a workflow that recomputes
-          each checksum.
-        </p>
-        <p><a href="installation.html">Installation instructions</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>Frequently asked questions</h2>
-      <div class="prose">
-        <dl class="faq">
-          <dt>Does it need my router configured?</dt>
-          <dd>No. Outbound connections only — no port forwarding, no static IP, no router access.</dd>
-
-          <dt>Is there a usage or duration limit?</dt>
-          <dd>The app imposes none. A tunnel lasts as long as it is running; restarting it produces a new URL.</dd>
-
-          <dt>Can I use a custom domain or my Cloudflare account?</dt>
-          <dd>Not in this version. Only anonymous Quick Tunnels are supported.</dd>
-
-          <dt>Can it share a database or an SSH port?</dt>
-          <dd>No, and it will refuse: exposure requires the target to answer as HTTP or HTTPS.</dd>
-
-          <dt>Does it collect anything?</dt>
-          <dd>No telemetry, no analytics, no account. See <a href="security.html">security and privacy</a>.</dd>
-
-          <dt>Why isn't the source code here?</dt>
-          <dd>This is the public download and documentation site. The application ships as a compiled binary.</dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="cols">
-      <div>
-        <strong>Local Server Exposer</strong><br>
-        Maintained by <a href="https://github.com/palashsuryavanshi">palashsuryavanshi</a>
-      </div>
-      <nav>
-        <a href="getting-started.html">Getting started</a>
-        <a href="installation.html">Installation</a>
-        <a href="troubleshooting.html">Troubleshooting</a>
-        <a href="security.html">Security</a>
-        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">Report an issue</a>
-      </nav>
-    </div>
-    <p class="legal">
-      Proprietary software — all rights reserved. Distributed as a compiled binary;
-      the source code is not publicly available. Tunnel URLs are access
-      credentials: never publish one.
-    </p>
-  </div>
-</footer>
-
-</body>
-</html>
+<!doctype html><html lang="en"><head><script>window.__LSE_RELEASE__={"state":"ready","tag":"v1.0.0","version":"1.0.0","name":"Local Server Exposer 1.0.0 (Windows x64)","url":"https://github.com/palashsuryavanshi/localserverexposer_public/releases/tag/v1.0.0","publishedAt":"2026-10-10T18:18:36Z","asset":{"name":"LocalServerExposer_1.0.0_x64-setup.exe","size":2914395,"sizeText":"2.78 MB","url":"https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe"},"fetchedAt":"2026-10-10T19:20:01.751Z"};window.__LSE_RELEASE_API__="https://api.github.com/repos/palashsuryavanshi/localserverexposer_public/releases/latest";</script><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Local Server Exposer — Your local servers, accessible anywhere.</title><meta name="description" content="Discover local development servers, manage Cloudflare Quick Tunnels, and access your projects from external devices using a convenient Windows desktop application." /><link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/index.html" /><meta name="theme-color" content="#090b10" /><meta name="color-scheme" content="dark" /><meta name="referrer" content="strict-origin-when-cross-origin" /><meta property="og:type" content="website" /><meta property="og:site_name" content="Local Server Exposer" /><meta property="og:title" content="Local Server Exposer — Your local servers, accessible anywhere." /><meta property="og:description" content="Discover local development servers, manage Cloudflare Quick Tunnels, and access your projects from external devices using a convenient Windows desktop application." /><meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/index.html" /><meta property="og:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/og-image.png" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Local Server Exposer showing discovered local development servers and a running Cloudflare Quick Tunnel" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="Local Server Exposer — Your local servers, accessible anywhere." /><meta name="twitter:description" content="Discover local development servers, manage Cloudflare Quick Tunnels, and access your projects from external devices using a convenient Windows desktop application." /><meta name="twitter:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/og-image.png" /><link rel="icon" href="assets/favicon.svg" type="image/svg+xml" /><link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png" /><link rel="apple-touch-icon" href="assets/apple-touch-icon.png" /><link rel="stylesheet" href="assets/site.css" /><script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Local Server Exposer",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows 10, Windows 11",
+        "description": "Discover local development servers, manage Cloudflare Quick Tunnels, and access your projects from external devices using a convenient Windows desktop application.",
+        "url": "https://palashsuryavanshi.github.io/localserverexposer_public/",
+        "downloadUrl": "https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe",
+        "softwareVersion": "1.0.0",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "maintainer": { "@type": "Person", "name": "palashsuryavanshi", "url": "https://github.com/palashsuryavanshi" }
+      }
+    </script></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container site-header__inner"><a class="brand" href="index.html" aria-label="Local Server Exposer — home"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6" /><path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round" /><circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8" /></svg><span>Local Server Exposer</span></a><nav class="nav" id="primary-nav" aria-label="Primary"><a href="index.html#features">Features</a><a href="index.html#how-it-works">How it works</a><a href="index.html#security">Security</a><a href="index.html#faq">FAQ</a><a class="nav-github" href="https://github.com/palashsuryavanshi/localserverexposer_public" target="_blank" rel="noopener">GitHub</a></nav><div class="header-actions"><a class="btn btn--ghost btn-ghost" href="https://github.com/palashsuryavanshi/localserverexposer_public" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.21 1.87.86 2.33.66.07-.52.28-.86.5-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>GitHub</span></a><a class="btn btn--primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" data-download-cta><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5v8.2l2.9-2.9 1.06 1.06L8 12.06 4.04 7.86 5.1 6.8l2.9 2.9V1.5h1ZM2.5 12.5h11v1.6h-11z"/></svg><span>Download</span></a><button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="Open navigation menu"
+          ><svg class="icon-menu" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg><svg class="icon-close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div></div></header><main id="main"><section class="hero" id="top"><div class="container hero__grid"><div class="hero__copy"><span class="eyebrow">PUBLIC RELEASES &middot; WINDOWS DEVELOPER TOOL</span><h1 class="hero__title">Your local servers, <em>accessible anywhere.</em></h1><p class="hero__lede">
+            Find local development servers, manage Cloudflare Tunnels, and test your projects
+            across devices — all from a simple Windows desktop interface.
+          </p><div class="hero__actions"><a class="btn btn--primary btn--lg" href="#download" data-download-cta><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5v8.2l2.9-2.9 1.06 1.06L8 12.06 4.04 7.86 5.1 6.8l2.9 2.9V1.5h1ZM2.5 12.5h11v1.6h-11z"/></svg><span>Download for Windows</span></a><a class="btn btn--lg" href="https://github.com/palashsuryavanshi/localserverexposer_public" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.21 1.87.86 2.33.66.07-.52.28-.86.5-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>Explore on GitHub</span></a></div><div class="hero__meta"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5"/></svg>
+              Windows desktop application
+            </span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M1.5 8h13M8 1.5c2 2.2 2 10.8 0 13-2-2.2-2-10.8 0-13Z"/></svg>
+              Cloudflare Tunnel integration
+            </span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 1.5 13.5 4v4.2c0 3.3-2.3 5.6-5.5 6.3-3.2-.7-5.5-3-5.5-6.3V4L8 1.5Z"/></svg>
+              Designed for local development
+            </span></div></div><div class="hero__visual"><div class="window window--hero"><div class="window__bar"><span class="window__dots"><span></span><span></span><span></span></span><span class="window__title">LocalServerExposer.exe</span></div><div class="window__body"><img
+                class="hero__shot"
+                src="assets/app-servers-hero.webp"
+                alt="Local Server Exposer listing discovered local development servers, including Ready HTTP services on ports 3000 and 5173"
+                width="1122"
+                height="789"
+                fetchpriority="high"
+                decoding="async"
+              /></div></div></div></div></section><section class="trust" aria-label="Compatibility at a glance"><div class="container trust__grid"><div class="trust__item"><strong>Windows 10 / 11 · x64</strong><span>Desktop application</span></div><div class="trust__item"><strong>Cloudflare Quick Tunnels</strong><span>Anonymous, no account needed</span></div><div class="trust__item"><strong>Per-user install</strong><span>No administrator rights</span></div><div class="trust__item"><strong>No telemetry</strong><span>Logs stay on your machine</span></div></div></section><section class="section" id="features"><div class="container"><div class="section-head"><span class="eyebrow">Capabilities</span><h2>Everything a tunnel CLI does, without the terminal</h2><p>
+            Six capabilities, all present in 1.0.0. Nothing here is queued for a future
+            release — this is what the shipped application does today.
+          </p></div><div class="feature-grid"><article class="card card--hover" data-reveal><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2.5" y="3.5" width="15" height="5" rx="1.4"/><rect x="2.5" y="11.5" width="15" height="5" rx="1.4"/><path d="M5 6h.01M5 14h.01"/></svg></span><h3>Local server discovery</h3><p class="card__lede">See the development servers running on your machine.</p><p>The application enumerates IPv4 loopback listeners through the native Windows TCP table and attaches the owning process where the OS permits it. Detection is limited to loopback and wildcard-bound addresses; a port you cannot see is a port the app cannot offer to share.</p></article><article class="card card--hover" data-reveal><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4.5" cy="10" r="2"/><circle cx="15.5" cy="5" r="2"/><circle cx="15.5" cy="15" r="2"/><path d="M6.4 9.1 13.6 5.9M6.4 10.9l7.2 3.2"/></svg></span><h3>One-click tunnel management</h3><p class="card__lede">Manage external access without juggling terminals.</p><p>For services that answer HTTP or HTTPS, the app runs the supported Cloudflare Quick Tunnel workflow for you — spawn, watch for the published URL, keep the status current, stop it on request. Anonymous Quick Tunnels are the only mode supported in 1.0.0.</p></article><article class="card card--hover" data-reveal><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4h5v5M16 4l-7 7"/><path d="M14 11.5V15a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 15V7.5A1.5 1.5 0 0 1 5 6h3.5"/></svg></span><h3>Shareable development URLs</h3><p class="card__lede">Test your project on another device.</p><p>A running tunnel publishes a public https://…trycloudflare.com address for your local service, so a phone on mobile data or a teammate on another network can load the real thing instead of a screenshot.</p></article><article class="card card--hover" data-reveal><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2.5" y="3.5" width="15" height="10" rx="1.6"/><path d="M7 16.5h6M10 13.5v3"/></svg></span><h3>Built for Windows</h3><p class="card__lede">A desktop workflow designed for developers.</p><p>One native-feeling window replaces a sequence of CLI steps: no terminals to keep open, no flags to memorise, and status that is visible at a glance while you work.</p></article><article class="card card--hover" data-reveal><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M10 2.8 17 6.4 10 10 3 6.4l7-3.6Z"/><path d="m3 10 7 3.6 7-3.6M3 13.6 10 17.2l7-3.6"/></svg></span><h3>Multiple local projects</h3><p class="card__lede">Switch between the services you need.</p><p>Several services can be exposed at the same time, each with its own independent tunnel and URL. Stopping one leaves the others running.</p></article><article class="card card--hover" data-reveal><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.6 16 5v5c0 3.6-2.5 6.2-6 7-3.5-.8-6-3.4-6-7V5l6-2.4Z"/><path d="m7.6 10 1.7 1.7 3.2-3.4"/></svg></span><h3>Visibility and control</h3><p class="card__lede">Know which service you are exposing.</p><p>Exposure is always explicit: the port, the local URL and the owning process are shown in a confirmation dialog before anything is published, and a tunnel can be stopped from the card, the Tunnels page or the tray.</p></article></div></div></section><section class="section section--soft" id="how-it-works"><div class="container"><div class="section-head"><span class="eyebrow">How it works</span><h2>Three steps, one window</h2><p>
+            The workflow is deliberately small. If a step cannot complete, the interface says
+            why instead of leaving you guessing.
+          </p></div><div class="flow"><article class="flow__item" data-reveal><span class="flow__n">STEP 1</span><h3>Find your server</h3><p>Start your local project and identify its listening port in Local Server Exposer.</p><div class="flow__visual"><div class="flow__row"><span class="badge badge--ok"><span class="dot dot--pulse"></span>Ready</span><span>:5173</span></div><div style="margin-top:8px">http://localhost:5173</div><div style="margin-top:4px;color:var(--muted)">node.exe · PID 17384</div></div></article><article class="flow__item" data-reveal><span class="flow__n">STEP 2</span><h3>Start a tunnel</h3><p>Select the intended service and use the supported Cloudflare Tunnel workflow.</p><div class="flow__visual"><div class="flow__row"><span style="color:var(--text-soft)">localhost:5173</span><span class="flow__arrow"></span><span class="badge badge--live"><span class="dot dot--pulse"></span>*.trycloudflare.com</span></div></div></article><article class="flow__item" data-reveal><span class="flow__n">STEP 3</span><h3>Access your project</h3><p>Use the available public URL to test the project on a phone, tablet, or another computer.</p><div class="flow__visual"><div class="flow__row"><span class="badge badge--live"><span class="dot dot--pulse"></span>Connected</span><span style="color:var(--muted)">phone · mobile network</span></div></div></article></div><p class="flow__note"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.2v4M8 5.1h.01"/></svg><span>Availability depends on tunnel configuration, connectivity, application behaviour, and applicable Cloudflare requirements.</span></p></div></section><section class="section" id="preview"><div class="container"><div class="section-head"><span class="eyebrow">Interactive preview</span><h2>Try the interface</h2><p>
+            A working preview of the dashboard with fictional data. Nothing here scans your
+            computer, contacts your processes, or creates a tunnel.
+          </p></div><div class="preview"><div class="window"><div class="window__bar"><span class="window__dots"><span></span><span></span><span></span></span><span class="window__title">Local Server Exposer — preview</span><span class="demo-note" style="margin-left:auto"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M8 1.5 9.6 6l4.9.3-3.8 3.2 1.2 4.8L8 11.6 4.1 14.3l1.2-4.8L1.5 6.3 6.4 6 8 1.5Z"/></svg>
+                Interactive demo — simulated data
+              </span></div><div class="window__body"><div class="app-frame"><div class="app-frame__side"><span class="app-frame__logo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round"/><circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8"/></svg>
+                    Exposer
+                  </span><span class="app-frame__nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2.5" width="12" height="4" rx="1"/><rect x="2" y="9.5" width="12" height="4" rx="1"/></svg>
+                    Local Servers
+                  </span><span class="app-frame__nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M2 8h12"/></svg>
+                    Tunnels <span class="count" data-demo-count>2</span></span><span class="app-frame__nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="2.4"/><path d="M8 1.6v1.8M8 12.6v1.8M14.4 8h-1.8M3.4 8H1.6"/></svg>
+                    Settings
+                  </span></div><div class="app-frame__main"><div class="app-frame__head"><h4>Local Servers</h4><p>simulated · not your machine</p></div><div class="svc-list" data-demo-services><button
+                      class="svc"
+                      type="button"
+                      data-service="vite"
+                      data-state="connected"
+                      data-port="5173"
+                      data-url="http://localhost:5173"
+                      data-process="node.exe · PID 17384"
+                      data-public="https://quiet-harbour-9c21.trycloudflare.com"
+                      aria-pressed="false"
+                    ><span class="svc__row"><span class="svc__port">:5173</span><span class="svc__url">http://localhost:5173</span><span class="svc__status badge badge--live" data-demo-badge><span class="dot dot--pulse"></span>Connected
+                        </span></span><span class="svc__meta"><span class="badge badge--muted">Vite</span><span class="svc__url">node.exe · PID 17384</span></span></button><button
+                      class="svc"
+                      type="button"
+                      data-service="next"
+                      data-state="connected"
+                      data-port="3000"
+                      data-url="http://localhost:3000"
+                      data-process="node.exe · PID 14548"
+                      data-public="https://amber-lantern-4f08.trycloudflare.com"
+                      aria-pressed="false"
+                    ><span class="svc__row"><span class="svc__port">:3000</span><span class="svc__url">http://localhost:3000</span><span class="svc__status badge badge--live" data-demo-badge><span class="dot dot--pulse"></span>Connected
+                        </span></span><span class="svc__meta"><span class="badge badge--muted">Next.js</span><span class="svc__url">node.exe · PID 14548</span></span></button><button
+                      class="svc"
+                      type="button"
+                      data-service="api"
+                      data-state="stopped"
+                      data-port="8000"
+                      data-url="http://localhost:8000"
+                      data-process="python.exe · PID 10232"
+                      data-public=""
+                      aria-pressed="false"
+                    ><span class="svc__row"><span class="svc__port">:8000</span><span class="svc__url">http://localhost:8000</span><span class="svc__status badge badge--muted" data-demo-badge>
+                          Stopped
+                        </span></span><span class="svc__meta"><span class="badge badge--muted">FastAPI</span><span class="svc__url">python.exe · PID 10232</span></span></button></div><div class="panel" style="margin-top:14px"><div class="panel__label">Tunnel panel</div><div class="kv"><span class="kv__key">Local address</span><span class="kv__val" data-demo-local>select a service</span></div><div class="kv"><span class="kv__key">Status</span><span class="kv__val" data-demo-status>&mdash;</span></div><div class="kv"><span class="kv__key">Public URL</span><span class="kv__val kv__val--url" data-demo-url>&mdash;</span></div><div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" data-demo-toggle>Stop tunnel</button><button class="btn" type="button" data-demo-copy disabled>Copy URL</button></div></div></div></div></div></div><div class="preview__pane"><div class="callout"><strong>What this demonstrates</strong><p>
+                Selecting a service shows its port, local URL, process and tunnel state — the
+                same information the real application shows, in the same layout.
+              </p></div><div class="panel"><div class="panel__label">Try it</div><ol class="steps" style="gap:12px"><li class="step"><div><h4>Pick a service</h4><p>Choose one of the three simulated listeners.</p></div></li><li class="step"><div><h4>Start or stop it</h4><p>The tunnel panel follows the selected service.</p></div></li><li class="step"><div><h4>Copy the URL</h4><p>An example address appears while a tunnel is running.</p></div></li></ol></div><div class="callout callout--warn"><strong>What it does not do</strong><p>
+                The ports, processes and URLs are invented for illustration. This page cannot
+                reach your computer's network stack, read your processes, or contact
+                Cloudflare.
+              </p></div></div></div></div></section><section class="section section--soft" id="use-cases"><div class="container"><div class="section-head"><span class="eyebrow">Use cases</span><h2>Made for the way developers actually work</h2><p>
+            The gap between "it works on my machine" and "look at it on your phone" is usually
+            a URL. These are the four situations it comes up in most.
+          </p></div><div class="use-case-grid"><article class="use-case" data-reveal><div class="use-case__diagram" aria-hidden="true"><svg viewBox="0 0 120 52" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="10" width="26" height="32" rx="4" stroke="var(--line)"/><rect x="44" y="16" width="30" height="20" rx="3" stroke="var(--line)"/><path d="M34 26h8" stroke="var(--cyan)" stroke-linecap="round"/><circle cx="90" cy="26" r="9" stroke="var(--cyan)"/><path d="M86 26l3 3 5-6" stroke="var(--cyan)" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Test on your phone</h3><p>Check responsive layouts on a real mobile device instead of relying entirely on browser emulation.</p></article><article class="use-case" data-reveal><div class="use-case__diagram" aria-hidden="true"><svg viewBox="0 0 120 52" fill="none" stroke-width="1.3"><rect x="4" y="16" width="30" height="20" rx="3" stroke="var(--line)"/><circle cx="52" cy="26" r="10" stroke="var(--line)"/><rect x="76" y="12" width="40" height="28" rx="3" stroke="var(--line)"/><path d="M36 26h6M64 26h10" stroke="var(--cyan)" stroke-linecap="round"/></svg></div><h3>Demo to a client</h3><p>Share an accessible preview of a development project when the chosen tunnel configuration supports it.</p></article><article class="use-case" data-reveal><div class="use-case__diagram" aria-hidden="true"><svg viewBox="0 0 120 52" fill="none" stroke-width="1.3"><circle cx="18" cy="20" r="6" stroke="var(--line)"/><circle cx="18" cy="38" r="6" stroke="var(--line)"/><rect x="40" y="16" width="34" height="22" rx="3" stroke="var(--line)"/><circle cx="98" cy="26" r="7" stroke="var(--cyan)"/><path d="M26 22h10M26 38h10M76 26h14" stroke="var(--cyan)" stroke-linecap="round"/></svg></div><h3>Collaborate with teammates</h3><p>Let a teammate inspect a local project through a temporary public endpoint, provided appropriate access controls are in place.</p></article><article class="use-case" data-reveal><div class="use-case__diagram" aria-hidden="true"><svg viewBox="0 0 120 52" fill="none" stroke-width="1.3"><path d="M14 40 40 14l14 14L40 42z" stroke="var(--line)"/><path d="M60 20h46M60 30h32M60 40h38" stroke="var(--line)" stroke-linecap="round"/><circle cx="96" cy="16" r="6" stroke="var(--cyan)"/></svg></div><h3>Learn and experiment</h3><p>Make local web development workflows easier to understand for students and independent developers.</p></article></div></div></section><section class="section" id="architecture"><div class="container"><div class="section-head"><span class="eyebrow">Technical model</span><h2>What actually happens to your request</h2><p>
+            The chain is short, and every link in it has to be true for the page in front of
+            you to load.
+          </p></div><div class="arch"><div class="arch__node "><strong>Windows PC</strong><span>Local Server Exposer</span></div><div class="arch__node "><strong>Local development server</strong><span>127.0.0.1:&lt;port&gt;</span></div><div class="arch__node arch__node--cyan"><strong>Cloudflare Tunnel</strong><span>Quick Tunnel</span></div><div class="arch__node "><strong>External browser or device</strong><span>Public URL</span></div></div><ul class="notes"><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.3v4M8 5.1h.01"/></svg><span>The local service must be running and reachable on the selected port.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.3v4M8 5.1h.01"/></svg><span>The port you select must correspond to the service you intend to expose.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.3v4M8 5.1h.01"/></svg><span>Tunnel operation depends on the supported Cloudflare configuration and your connectivity.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.3v4M8 5.1h.01"/></svg><span>A public URL is not the same as application-level authentication.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.3v4M8 5.1h.01"/></svg><span>Localhost addresses shown in this site&#39;s illustrations are examples, not live endpoints.</span></li></ul></div></section><section class="section section--soft" id="security"><div class="container"><div class="section-head"><span class="eyebrow">Security &amp; privacy</span><h2>Share intentionally. Stay in control.</h2><p>
+            Putting a development server on the internet is a real decision with real
+            consequences. The application is careful; the responsibility stays with you.
+          </p></div><div class="security"><ul class="security__list"><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>You choose which local services are exposed — discovery is not exposure.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Only intended ports should become publicly reachable.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Development servers often expose unfinished code, test data, debug endpoints or admin interfaces.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>A public tunnel does not make the underlying application safe.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Stop tunnels when you no longer need them.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Use authentication and application-level access controls where appropriate.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Cloudflare account and authentication requirements depend on the tunnel mode and supported workflow.</span></li></ul><div><figure class="shot"><div class="window"><div class="window__bar"><span class="window__dots"><span></span><span></span><span></span></span><span class="window__title">LocalServerExposer.exe</span></div><div class="window__body"><img
+                    src="assets/app-confirm.webp"
+                    alt="The application's confirmation dialog naming the port, local address and owning process before a service is exposed"
+                    width="1200"
+                    height="702"
+                    loading="lazy"
+                    decoding="async"
+                  /></div></div><figcaption>
+                Every exposure is confirmed individually — the dialog names the port, the
+                local address and the process that owns it. <em>Screenshot from the
+                application.</em></figcaption></figure><div class="callout callout--warn"><strong>Before you expose a service</strong><ul class="checklist" style="margin-top:12px"><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Confirm the port and application before exposing it.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Remove sensitive or real test data from the service.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Check authentication and access controls are in place.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Never expose databases, debug consoles or administrative endpoints.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Share the public URL only with intended recipients.</span></li><li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Stop the tunnel when you are finished.</span></li></ul></div><p style="margin-top:20px"><a class="link-arrow" href="security.html">
+                Read the full security notes
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg></a></p></div></div></div></section><section class="section" id="download"><div class="container download"><div><span class="eyebrow">Download</span><h2 class="download__title"><img
+              class="download__icon"
+              src="assets/app-icon.webp"
+              alt=""
+              width="44"
+              height="44"
+              loading="lazy"
+              decoding="async"
+            />
+            Get Local Server Exposer
+          </h2><p class="muted" style="margin-top:12px;max-width:44ch">
+            One per-user installer. No administrator rights, no bundled third-party binaries:
+            the tunnel client is downloaded separately, on request, when you first need it.
+          </p><div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><a
+              class="btn btn--primary btn--lg"
+              href="https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe"
+              data-release-primary
+              data-download-cta
+            ><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1"/><path d="M1.5 4.5 8 9l6.5-4.5M4.5 14h7"/></svg><span data-release-primary-label
+                >Download v1.0.0</span
+              ></a><a class="btn btn--lg" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">
+              All releases
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg></a></div><p class="muted" style="margin-top:16px;font-size:0.88rem">
+            Windows 10 or 11, 64-bit. Not code-signed, so Windows may show an unfamiliar-app
+            warning — verify the published SHA-256 checksum before running it.
+          </p></div><div class="download__card"><div class="release-status" data-release-status><span class="badge badge--ok">v1.0.0</span><span>
+              &middot; published
+              <time datetime="2026-10-10T18:18:36Z" data-release-date>2026-10-10T18:18:36Z</time></span></div><div class="release-line" data-release-meta ><span class="mono">LocalServerExposer_1.0.0_x64-setup.exe</span><span>2.78 MB</span><a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases/tag/v1.0.0" target="_blank" rel="noopener">Release notes</a></div><div class="panel"><div class="panel__label">Install in three steps</div><ol class="steps" style="gap:12px"><li class="step"><div><h4>Open the latest release</h4><p>Go to the releases page and pick the newest published version.</p></div></li><li class="step"><div><h4>Download the Windows installer</h4><p>Download the published .exe installer for your architecture.</p></div></li><li class="step"><div><h4>Run it</h4><p>Launch the installer and follow the prompts. Installation details depend on how the build is packaged.</p></div></li></ol></div><div class="panel"><div class="kv"><span class="kv__key">Operating system</span><span class="kv__val">Windows 10 or Windows 11, 64-bit</span></div><div class="kv"><span class="kv__key">Architecture<span class="kv__note">No ARM64 or 32-bit build</span></span><span class="kv__val">x64</span></div><div class="kv"><span class="kv__key">Administrator rights<span class="kv__note">The installer is per-user</span></span><span class="kv__val">Not required</span></div><div class="kv"><span class="kv__key">Runtime<span class="kv__note">Normally already installed</span></span><span class="kv__val">Microsoft Edge WebView2</span></div><div class="kv"><span class="kv__key">Internet<span class="kv__note">And once, to fetch the tunnel client</span></span><span class="kv__val">Required to start a tunnel</span></div></div><p class="muted" style="font-size:0.84rem;margin:0">
+            Never disable antivirus or Windows security protections to run an installer. If
+            Windows blocks the file, confirm you downloaded it from the
+            <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">releases page</a> and
+            check its checksum first.
+          </p></div></div></section><section class="section section--soft" id="faq"><div class="container"><div class="section-head"><span class="eyebrow">FAQ</span><h2>Questions people actually ask</h2></div><div class="accordion" data-accordion><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-0" aria-controls="faq-panel-0"><span>What is Local Server Exposer?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-0" role="region" aria-labelledby="faq-trigger-0"><div><p>A Windows desktop application that lists the development servers listening on your machine, shows which of them answer HTTP or HTTPS, and lets you publish a chosen one through a Cloudflare Quick Tunnel so it can be reached from another device.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-1" aria-controls="faq-panel-1"><span>Is it free?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1"><div><p>The application is free to download and there is no paid tier. It depends on Cloudflare&#39;s Quick Tunnel service to create public URLs; that service, and any terms attached to it, are Cloudflare&#39;s, not ours.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-2" aria-controls="faq-panel-2"><span>Do I need a Cloudflare account?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2"><div><p>Not for the workflow this application supports. It creates anonymous Quick Tunnels, which need no account. Named tunnels, custom hostnames and Cloudflare Access are not supported in 1.0.0; those modes have their own account and configuration requirements.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-3" aria-controls="faq-panel-3"><span>Does it work with localhost:3000 and localhost:5173?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3"><div><p>Common development ports are nothing special — what matters is that your project is listening and that it answers HTTP or HTTPS. If the app cannot detect the port you expect, it will not offer to expose it.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-4" aria-controls="faq-panel-4"><span>Can I access my project from my phone?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-4" role="region" aria-labelledby="faq-trigger-4"><div><p>Yes, while the tunnel is running. Your phone needs its own internet connection, not the same Wi-Fi network, and the tunnel must still be active on your PC.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-5" aria-controls="faq-panel-5"><span>Does it expose all my local ports automatically?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-5" role="region" aria-labelledby="faq-trigger-5"><div><p>No. Finding a listening port is not the same as exposing it. Nothing becomes public until you choose a port, read the confirmation dialog and confirm.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-6" aria-controls="faq-panel-6"><span>Is the public URL accessible to anyone?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6"><div><p>The hostname is hard to guess, but the URL itself is the credential: anyone who obtains it can reach your service until you stop the tunnel. Add application-level authentication if the service should not be reachable by anyone holding the link.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-7" aria-controls="faq-panel-7"><span>Does it work when my computer is turned off?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-7" role="region" aria-labelledby="faq-trigger-7"><div><p>No. The tunnel runs on your machine, so if the machine is off, asleep or disconnected from the internet, the public URL stops serving. This tool is for local development, not hosting.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-8" aria-controls="faq-panel-8"><span>Is my source code public?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-8" role="region" aria-labelledby="faq-trigger-8"><div><p>No. The application is distributed as a compiled Windows binary. This repository is public and contains the website, the documentation and the release downloads; the application source code is kept private.</p></div></div></div><div class="accordion__item"><h3 style="margin:0"><button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-9" aria-controls="faq-panel-9"><span>How do I report a bug?</span><svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></button></h3><div class="accordion__panel" id="faq-panel-9" role="region" aria-labelledby="faq-trigger-9"><div><p>Open an issue on the public repository. Include the application version, your Windows version and what you expected to happen — and never paste a live tunnel URL, because a URL is access to your server.</p></div></div></div></div></div></section><section class="section"><div class="container"><div class="repo"><div><h2 style="font-size:var(--step-2)">Releases live on GitHub</h2><p class="muted" style="margin-top:12px;max-width:56ch">
+              The public repository hosts this website, the documentation and the published
+              binaries. The application is distributed as a compiled Windows binary — its
+              source code is not published.
+            </p></div><div class="repo__actions"><a class="btn btn--primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">View releases</a><a class="btn" href="getting-started.html">Read documentation</a><a class="btn" href="https://github.com/palashsuryavanshi/localserverexposer_public/issues/new" target="_blank" rel="noopener">Report an issue</a></div></div></div></section></main><footer class="site-footer"><div class="container"><div class="site-footer__grid"><div class="site-footer__brand"><a class="brand" href="index.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6" /><path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round" /><circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8" /></svg><span>Local Server Exposer</span></a><p class="site-footer__desc">
+              Your local servers, accessible anywhere. A Windows desktop application for
+              discovering local development servers and sharing them through Cloudflare Quick
+              Tunnels.
+            </p></div><nav aria-label="Product"><h2>Product</h2><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how-it-works">How it works</a></li><li><a href="index.html#security">Security</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#download">Download</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">All releases</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues/new" target="_blank" rel="noopener">Report an issue</a></li></ul></nav><nav aria-label="Resources"><h2>Resources</h2><ul><li><a href="index.html#download">Installation</a></li><li><a href="index.html#how-it-works">How it works</a></li><li><a href="security.html">Security &amp; privacy</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues/new" target="_blank" rel="noopener">Report a bug</a></li></ul></nav></div><div class="site-footer__legal"><span>&copy; 2026 palashsuryavanshi. All rights reserved.</span><span>
+            Proprietary software distributed as a compiled binary; the application source code
+            is not public. See <a href="https://github.com/palashsuryavanshi/localserverexposer_public/blob/main/LICENSE">LICENSE</a>.
+          </span></div></div></footer><script src="assets/site.js" defer></script></body></html>

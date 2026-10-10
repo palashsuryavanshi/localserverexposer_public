@@ -1,0 +1,88 @@
+<section class="section section--soft" id="use-cases">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Use cases</span>
+          <h2>Made for the way developers actually work</h2>
+          <p>
+            The gap between "it works on my machine" and "look at it on your phone" is usually
+            a URL. These are the four situations it comes up in most.
+          </p>
+        </div>
+
+        <div class="use-case-grid">
+          {{#each USE_CASES}}
+          <article class="use-case" data-reveal>
+            <div class="use-case__diagram" aria-hidden="true">
+              {{#if this.diagram == 'phone'}}
+              <svg viewBox="0 0 120 52" fill="none" stroke="currentColor" stroke-width="1.3">
+                <rect x="4" y="10" width="26" height="32" rx="4" stroke="var(--line)"/>
+                <rect x="44" y="16" width="30" height="20" rx="3" stroke="var(--line)"/>
+                <path d="M34 26h8" stroke="var(--cyan)" stroke-linecap="round"/>
+                <circle cx="90" cy="26" r="9" stroke="var(--cyan)"/>
+                <path d="M86 26l3 3 5-6" stroke="var(--cyan)" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {{else}}
+              {{#if this.diagram == 'share'}}
+              <svg viewBox="0 0 120 52" fill="none" stroke-width="1.3">
+                <rect x="4" y="16" width="30" height="20" rx="3" stroke="var(--line)"/>
+                <circle cx="52" cy="26" r="10" stroke="var(--line)"/>
+                <rect x="76" y="12" width="40" height="28" rx="3" stroke="var(--line)"/>
+                <path d="M36 26h6M64 26h10" stroke="var(--cyan)" stroke-linecap="round"/>
+              </svg>
+              {{else}}
+              {{#if this.diagram == 'team'}}
+              <svg viewBox="0 0 120 52" fill="none" stroke-width="1.3">
+                <circle cx="18" cy="20" r="6" stroke="var(--line)"/>
+                <circle cx="18" cy="38" r="6" stroke="var(--line)"/>
+                <rect x="40" y="16" width="34" height="22" rx="3" stroke="var(--line)"/>
+                <circle cx="98" cy="26" r="7" stroke="var(--cyan)"/>
+                <path d="M26 22h10M26 38h10M76 26h14" stroke="var(--cyan)" stroke-linecap="round"/>
+              </svg>
+              {{else}}
+              <svg viewBox="0 0 120 52" fill="none" stroke-width="1.3">
+                <path d="M14 40 40 14l14 14L40 42z" stroke="var(--line)"/>
+                <path d="M60 20h46M60 30h32M60 40h38" stroke="var(--line)" stroke-linecap="round"/>
+                <circle cx="96" cy="16" r="6" stroke="var(--cyan)"/>
+              </svg>
+              {{/if}}
+              {{/if}}
+              {{/if}}
+            </div>
+            <h3>{{ this.title }}</h3>
+            <p>{{ this.body }}</p>
+          </article>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Technical model</span>
+          <h2>What actually happens to your request</h2>
+          <p>
+            The chain is short, and every link in it has to be true for the page in front of
+            you to load.
+          </p>
+        </div>
+
+        <div class="arch">
+          {{#each ARCHITECTURE_FLOW}}
+          <div class="arch__node {{#if this.label == 'Local Server Exposer'}}arch__node--accent{{/if}}{{#if this.label == 'Cloudflare Tunnel'}}arch__node--cyan{{/if}}">
+            <strong>{{ this.label }}</strong>
+            <span>{{ this.detail }}</span>
+          </div>
+          {{/each}}
+        </div>
+
+        <ul class="notes">
+          {{#each ARCHITECTURE_NOTES}}
+          <li>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.3v4M8 5.1h.01"/></svg>
+            <span>{{ this }}</span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </section>

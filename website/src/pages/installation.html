@@ -1,0 +1,100 @@
+<div class="page-head">
+      <div class="container">
+        <p class="breadcrumbs"><a href="index.html">Home</a> / Installation</p>
+        <h1>Installation</h1>
+        <p>A per-user Windows application: one installer, no administrator prompt, no bundled third-party binaries.</p>
+      </div>
+    </div>
+
+    <div class="container doc-layout">
+      <article class="prose">
+        <h2 id="requirements">Requirements</h2>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Item</th><th>Value</th></tr>
+            {{#each INSTALL_COMPATIBILITY}}
+            <tr>
+              <td>{{ this.key }}</td>
+              <td>{{ this.value }}{{#if this.note}} — {{ this.note }}.{{/if}}</td>
+            </tr>
+            {{/each}}
+            <tr><td>Internet</td><td>Required to start a tunnel, and once to download the tunnel client.</td></tr>
+          </table>
+        </div>
+
+        <h2 id="install">Install</h2>
+        <ol class="steps">
+          {{#each INSTALL_STEPS}}
+          <li class="step">
+            <div>
+              <h4>{{ this.title }}</h4>
+              <p>{{ this.body }}</p>
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+
+        <p>
+          The latest release is always on the
+          <a href="{{ urls.releases }}" target="_blank" rel="noopener">releases page</a>. The
+          <a href="{{ urls.latest }}" target="_blank" rel="noopener">latest release page</a>
+          always points at the current version.
+        </p>
+
+        <div class="callout callout--warn">
+          <p>
+            <strong>The binaries are not code-signed.</strong> Windows SmartScreen will show an
+            unfamiliar-app warning on first run, and the application has no publisher
+            reputation. Verify the published SHA-256 checksum before choosing
+            <em>More info → Run anyway</em>. Never disable antivirus or Windows security
+            protections to install it.
+          </p>
+        </div>
+
+        <h2 id="verify">Verify what you downloaded</h2>
+        <p>Each release publishes a <code>SHA256SUMS.txt</code>. Compare it with your download:</p>
+        <pre><code>Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256</code></pre>
+        <p>
+          The published line looks like this — the hash must match exactly:
+        </p>
+        <pre><code>&lt;sha256&gt;  LocalServerExposer_1.0.0_x64-setup.exe</code></pre>
+        <p>
+          A scheduled workflow re-checks the published checksums after every release and
+          records the result in the Actions tab of the repository.
+        </p>
+
+        <h2 id="first-launch">First launch</h2>
+        <ul>
+          <li>The window opens in about a second and immediately begins scanning.</li>
+          <li>A tray icon appears; closing the window keeps the app in the background.</li>
+          <li>The first time you expose a server, the app asks before downloading the
+            <code>cloudflared</code> client. That download is explicit and never happens at
+            install time.</li>
+        </ul>
+
+        <h2 id="upgrade">Upgrade</h2>
+        <p>
+          Run the newer installer over the existing one. Settings, favorites and logs are
+          preserved. To move back to an older build, uninstall first — the installer blocks
+          downgrades by default.
+        </p>
+
+        <h2 id="uninstall">Uninstall</h2>
+        <ol class="steps">
+          <li class="step"><div><h4>Use Windows</h4><p><em>Settings → Apps → Installed apps → Local Server Exposer → Uninstall</em>, or the Uninstall shortcut in the Start Menu folder.</p></div></li>
+          <li class="step"><div><h4>What disappears</h4><p>The application, its shortcut and its uninstall entry. Any running tunnels stop.</p></div></li>
+          <li class="step"><div><h4>What stays</h4><p>Your settings, logs and the downloaded tunnel client in <code>%APPDATA%\com.localexp.local-server-exposer\</code>. Delete that folder for a complete removal.</p></div></li>
+        </ol>
+
+        <p><a class="link-arrow" href="troubleshooting.html">Installation problems <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg></a></p>
+      </article>
+
+      <aside class="doc-aside" aria-label="On this page">
+        <a href="#requirements">Requirements</a>
+        <a href="#install">Install</a>
+        <a href="#verify">Verify the download</a>
+        <a href="#first-launch">First launch</a>
+        <a href="#upgrade">Upgrade</a>
+        <a href="#uninstall">Uninstall</a>
+      </aside>
+    </div>

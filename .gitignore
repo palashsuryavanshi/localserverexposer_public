@@ -13,3 +13,6 @@ Thumbs.db
 *.log
 *.bak
 *~
+
+# Website tooling (the site itself has no dependencies)
+website/node_modules/

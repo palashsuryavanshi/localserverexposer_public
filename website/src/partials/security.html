@@ -1,0 +1,213 @@
+<section class="section section--soft" id="security">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Security &amp; privacy</span>
+          <h2>Share intentionally. Stay in control.</h2>
+          <p>
+            Putting a development server on the internet is a real decision with real
+            consequences. The application is careful; the responsibility stays with you.
+          </p>
+        </div>
+
+        <div class="security">
+          <ul class="security__list">
+            {{#each SECURITY_PRINCIPLES}}
+            <li>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>
+              <span>{{ this }}</span>
+            </li>
+            {{/each}}
+          </ul>
+
+          <div>
+            <figure class="shot">
+              <div class="window">
+                <div class="window__bar">
+                  <span class="window__dots"><span></span><span></span><span></span></span>
+                  <span class="window__title">LocalServerExposer.exe</span>
+                </div>
+                <div class="window__body">
+                  <img
+                    src="assets/app-confirm.webp"
+                    alt="The application's confirmation dialog naming the port, local address and owning process before a service is exposed"
+                    width="1200"
+                    height="702"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+              <figcaption>
+                Every exposure is confirmed individually — the dialog names the port, the
+                local address and the process that owns it. <em>Screenshot from the
+                application.</em>
+              </figcaption>
+            </figure>
+
+            <div class="callout callout--warn">
+              <strong>Before you expose a service</strong>
+              <ul class="checklist" style="margin-top:12px">
+                {{#each SECURITY_CHECKLIST}}
+                <li>
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>
+                  <span>{{ this }}</span>
+                </li>
+                {{/each}}
+              </ul>
+            </div>
+            <p style="margin-top:20px">
+              <a class="link-arrow" href="security.html">
+                Read the full security notes
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="download">
+      <div class="container download">
+        <div>
+          <span class="eyebrow">Download</span>
+          <h2 class="download__title">
+            <img
+              class="download__icon"
+              src="assets/app-icon.webp"
+              alt=""
+              width="44"
+              height="44"
+              loading="lazy"
+              decoding="async"
+            />
+            Get Local Server Exposer
+          </h2>
+          <p class="muted" style="margin-top:12px;max-width:44ch">
+            One per-user installer. No administrator rights, no bundled third-party binaries:
+            the tunnel client is downloaded separately, on request, when you first need it.
+          </p>
+
+          <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+            <a
+              class="btn btn--primary btn--lg"
+              href="{{#if release.asset}}{{ release.asset.url }}{{else}}{{ urls.latest }}{{/if}}"
+              data-release-primary
+              data-download-cta
+            >
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1"/><path d="M1.5 4.5 8 9l6.5-4.5M4.5 14h7"/></svg>
+              <span data-release-primary-label
+                >{{#if release.asset}}Download v{{ release.version }}{{else}}Download for Windows{{/if}}</span
+              >
+            </a>
+            <a class="btn btn--lg" href="{{ urls.releases }}" target="_blank" rel="noopener">
+              All releases
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg>
+            </a>
+          </div>
+
+          <p class="muted" style="margin-top:16px;font-size:0.88rem">
+            Windows 10 or 11, 64-bit. Not code-signed, so Windows may show an unfamiliar-app
+            warning — verify the published SHA-256 checksum before running it.
+          </p>
+        </div>
+
+        <div class="download__card">
+          <div class="release-status" data-release-status>
+            {{#if release.asset}}
+            <span class="badge badge--ok">v{{ release.version }}</span>
+            <span>
+              &middot; published
+              <time datetime="{{ release.publishedAt }}" data-release-date>{{ release.publishedAt }}</time>
+            </span>
+            {{else}}
+            <span>
+              Release information is unavailable right now — open the releases page to download.
+            </span>
+            {{/if}}
+          </div>
+
+          <div class="release-line" data-release-meta {{#if release.asset}}{{else}}hidden{{/if}}>
+            {{#if release.asset}}
+            <span class="mono">{{ release.asset.name }}</span>
+            <span>{{ release.asset.sizeText }}</span>
+            <a href="{{ release.url }}" target="_blank" rel="noopener">Release notes</a>
+            {{/if}}
+          </div>
+
+          <div class="panel">
+            <div class="panel__label">Install in three steps</div>
+            <ol class="steps" style="gap:12px">
+              {{#each INSTALL_STEPS}}
+              <li class="step">
+                <div>
+                  <h4>{{ this.title }}</h4>
+                  <p>{{ this.body }}</p>
+                </div>
+              </li>
+              {{/each}}
+            </ol>
+          </div>
+
+          <div class="panel">
+            {{#each INSTALL_COMPATIBILITY}}
+            <div class="kv">
+              <span class="kv__key">{{ this.key }}{{#if this.note}}<span class="kv__note">{{ this.note }}</span>{{/if}}</span>
+              <span class="kv__val">{{ this.value }}</span>
+            </div>
+            {{/each}}
+          </div>
+
+          <p class="muted" style="font-size:0.84rem;margin:0">
+            Never disable antivirus or Windows security protections to run an installer. If
+            Windows blocks the file, confirm you downloaded it from the
+            <a href="{{ urls.releases }}" target="_blank" rel="noopener">releases page</a> and
+            check its checksum first.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2>Questions people actually ask</h2>
+        </div>
+
+        <div class="accordion" data-accordion>
+          {{#each FAQ}}
+          <div class="accordion__item">
+            <h3 style="margin:0">
+              <button class="accordion__trigger" type="button" aria-expanded="false" id="faq-trigger-{{ @index }}" aria-controls="faq-panel-{{ @index }}">
+                <span>{{ this.q }}</span>
+                <svg class="accordion__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg>
+              </button>
+            </h3>
+            <div class="accordion__panel" id="faq-panel-{{ @index }}" role="region" aria-labelledby="faq-trigger-{{ @index }}">
+              <div><p>{{ this.a }}</p></div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="repo">
+          <div>
+            <h2 style="font-size:var(--step-2)">Releases live on GitHub</h2>
+            <p class="muted" style="margin-top:12px;max-width:56ch">
+              The public repository hosts this website, the documentation and the published
+              binaries. The application is distributed as a compiled Windows binary — its
+              source code is not published.
+            </p>
+          </div>
+          <div class="repo__actions">
+            <a class="btn btn--primary" href="{{ urls.releases }}" target="_blank" rel="noopener">View releases</a>
+            <a class="btn" href="getting-started.html">Read documentation</a>
+            <a class="btn" href="{{ urls.newIssue }}" target="_blank" rel="noopener">Report an issue</a>
+          </div>
+        </div>
+      </div>
+    </section>

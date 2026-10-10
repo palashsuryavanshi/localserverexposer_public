@@ -1,0 +1,52 @@
+<footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__grid">
+          <div class="site-footer__brand">
+            <a class="brand" href="index.html">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6" />
+                <path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round" />
+                <circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8" />
+              </svg>
+              <span>{{ site.name }}</span>
+            </a>
+            <p class="site-footer__desc">
+              Your local servers, accessible anywhere. A Windows desktop application for
+              discovering local development servers and sharing them through Cloudflare Quick
+              Tunnels.
+            </p>
+          </div>
+
+          <nav aria-label="Product">
+            <h2>Product</h2>
+            <ul>
+              {{#each footerLinks}} {{#if this.isExternal}}
+              <li><a href="{{ this.href }}" target="_blank" rel="noopener">{{ this.label }}</a></li>
+              {{else}}
+              <li><a href="{{ this.href }}">{{ this.label }}</a></li>
+              {{/if}} {{/each}}
+            </ul>
+          </nav>
+
+          <nav aria-label="Resources">
+            <h2>Resources</h2>
+            <ul>
+              <li><a href="index.html#download">Installation</a></li>
+              <li><a href="index.html#how-it-works">How it works</a></li>
+              <li><a href="security.html">Security &amp; privacy</a></li>
+              <li><a href="troubleshooting.html">Troubleshooting</a></li>
+              <li><a href="{{ urls.newIssue }}" target="_blank" rel="noopener">Report a bug</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="site-footer__legal">
+          <span>&copy; 2026 {{ site.maintainerName }}. All rights reserved.</span>
+          <span>
+            Proprietary software distributed as a compiled binary; the application source code
+            is not public. See <a href="https://github.com/{{ site.owner }}/localserverexposer_public/blob/main/LICENSE">LICENSE</a>.
+          </span>
+        </div>
+      </div>
+    </footer>

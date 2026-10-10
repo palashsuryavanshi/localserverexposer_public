@@ -2,27 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://palashsuryavanshi.github.io/localserverexposer_public/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-10</lastmod>
   </url>
   <url>
     <loc>https://palashsuryavanshi.github.io/localserverexposer_public/getting-started.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-10</lastmod>
   </url>
   <url>
     <loc>https://palashsuryavanshi.github.io/localserverexposer_public/installation.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-10</lastmod>
   </url>
   <url>
     <loc>https://palashsuryavanshi.github.io/localserverexposer_public/troubleshooting.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-10-10</lastmod>
   </url>
   <url>
     <loc>https://palashsuryavanshi.github.io/localserverexposer_public/security.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-10-10</lastmod>
   </url>
 </urlset>

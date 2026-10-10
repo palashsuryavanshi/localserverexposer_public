@@ -1,0 +1,129 @@
+<div class="page-head">
+      <div class="container">
+        <p class="breadcrumbs"><a href="index.html">Home</a> / Getting started</p>
+        <h1>Getting started</h1>
+        <p>From a running dev server to a URL you can open on your phone, in about a minute.</p>
+      </div>
+    </div>
+
+    <div class="container doc-layout">
+      <article class="prose">
+        <h2 id="before">Before you start</h2>
+        <p>
+          You need a development server that is actually listening, and you need the application
+          to recognise it as an HTTP or HTTPS service. Everything else follows from that.
+        </p>
+        <div class="callout">
+          <p>
+            The app only offers to expose ports that answer HTTP or HTTPS. A database port, a
+            debug protocol or a raw TCP service is shown as <strong>Unsupported</strong> and
+            cannot be shared — that is a policy decision, not a limitation of the tunnel.
+          </p>
+        </div>
+
+        <h2 id="find">1. Find your server</h2>
+        <p>
+          Start your project the way you normally do, then open Local Server Exposer. The
+          Servers page refreshes on its own every 15 seconds by default; you can also press
+          <strong>Refresh</strong>.
+        </p>
+        <p>Each listening port appears as a card showing the port, a clickable local address, and the process that owns it:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Column</th><th>Meaning</th></tr>
+            <tr><td><code>:5173</code></td><td>The listening port.</td></tr>
+            <tr><td><code>http://localhost:5173</code></td><td>The address the service is reachable at from your machine.</td></tr>
+            <tr><td><code>node.exe · PID 17384</code></td><td>The owning process, where Windows lets the app read it.</td></tr>
+            <tr><td>Status badge</td><td><strong>Ready</strong>, <strong>Unsupported</strong>, <strong>Unknown</strong> or <strong>Unreachable</strong>.</td></tr>
+          </table>
+        </div>
+        <p>
+          If a port you expect is missing, check that your server binds to <code>127.0.0.1</code>
+          rather than a LAN address, and remember that discovery is loopback-only.
+        </p>
+
+        <h2 id="expose">2. Expose it</h2>
+        <p>Press <strong>Expose</strong> on a card marked <em>Ready</em>. A confirmation appears naming the exact URL and process, and stating that the service becomes reachable from the public internet.</p>
+        <ol class="steps">
+          <li class="step"><div><h4>Read the dialog</h4><p>It names the port, the local URL and the process. Cancel is focused, and Escape or a click outside also cancels.</p></div></li>
+          <li class="step"><div><h4>Confirm</h4><p>There is no “don't ask again”. Every exposure and every retry is confirmed individually.</p></div></li>
+          <li class="step"><div><h4>Watch it start</h4><p>The card shows <strong>Starting</strong> while cloudflared registers with Cloudflare. If nothing is published after about a minute, the app fails the tunnel with a reason instead of waiting forever.</p></div></li>
+        </ol>
+
+        <h2 id="share">3. Share it</h2>
+        <p>When the tunnel is serving, the card shows the public URL with three controls:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Control</th><th>Effect</th></tr>
+            <tr><td><strong>Copy</strong></td><td>Copies the exact public URL to your clipboard.</td></tr>
+            <tr><td><strong>Open</strong></td><td>Opens the URL in your default browser.</td></tr>
+            <tr><td><strong>Stop</strong></td><td>Stops the tunnel; the URL stops working immediately.</td></tr>
+          </table>
+        </div>
+        <p>The Tunnels page lists every active tunnel with its URL, status and start time.</p>
+
+        <h2 id="stop">4. Stop it</h2>
+        <p>
+          Press <strong>Stop</strong> on the card, on the Tunnels page, or use
+          <strong>Stop all tunnels</strong> in the tray menu. Closing the window keeps the app
+          running in the tray; quitting from the tray stops every tunnel.
+        </p>
+        <div class="callout callout--warn">
+          <p>
+            A tunnel can never outlive the application. If the app is closed, killed, or your
+            machine signs out, the tunnel process is terminated with it — there is no setting
+            that leaves a public URL running unsupervised.
+          </p>
+        </div>
+
+        <h2 id="labels">Reading the labels</h2>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Label</th><th>What it means</th></tr>
+            <tr><td><strong>Ready</strong></td><td>Answers HTTP or HTTPS. The only state that can be exposed.</td></tr>
+            <tr><td><strong>Unsupported</strong></td><td>Listening, but not an HTTP service. Cannot be exposed.</td></tr>
+            <tr><td><strong>Unknown</strong></td><td>Not classified yet.</td></tr>
+            <tr><td><strong>Unreachable</strong></td><td>Listed but did not answer the probe — firewalled, closing, or owned by an elevated process.</td></tr>
+            <tr><td><strong>Starting</strong></td><td>The tunnel client is registering with Cloudflare.</td></tr>
+            <tr><td><strong>Exposed</strong></td><td>Live. The URL is working.</td></tr>
+            <tr><td><strong>Stopping…</strong></td><td>Shutting down.</td></tr>
+            <tr><td><strong>Tunnel failed</strong></td><td>It could not start, or it exited unexpectedly. The card shows why; press <strong>Retry</strong>.</td></tr>
+          </table>
+        </div>
+
+        <h2 id="find-more">Finding things quickly</h2>
+        <ul>
+          <li><strong>Filters</strong> — All, HTTP, Exposed, Available.</li>
+          <li><strong>Search</strong> — matches port, process name or detected framework.</li>
+          <li><strong>Favorites</strong> — star a card to pin it to the top; stored in settings.</li>
+          <li><strong>Unavailable rows</strong> — if a tunneled server stops, its card stays visible so you can still stop the tunnel.</li>
+        </ul>
+
+        <h2 id="settings">Settings worth knowing</h2>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Setting</th><th>Effect</th></tr>
+            <tr><td>Scan interval</td><td>Seconds between scans (5–300).</td></tr>
+            <tr><td>Enable HTTP / HTTPS detection</td><td>Off lists listeners without probing them.</td></tr>
+            <tr><td>Scan localhost only</td><td>Off lists LAN listeners too, but they are never exposable.</td></tr>
+            <tr><td>Maximum concurrent probes</td><td>Parallel probes per scan (1–256).</td></tr>
+            <tr><td>cloudflared executable</td><td>Automatic (managed download) or a path you supply. Any copy is verified before each tunnel.</td></tr>
+            <tr><td>Minimize to tray</td><td>Closing the window keeps the app in the tray.</td></tr>
+            <tr><td>Stop tunnel when its server stops</td><td>Off (default) keeps a tunnel alive across a quick server restart.</td></tr>
+          </table>
+        </div>
+
+        <p><a class="link-arrow" href="troubleshooting.html">Something not working? Troubleshooting guide <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg></a></p>
+      </article>
+
+      <aside class="doc-aside" aria-label="On this page">
+        <a href="#before">Before you start</a>
+        <a href="#find">1. Find your server</a>
+        <a href="#expose">2. Expose it</a>
+        <a href="#share">3. Share it</a>
+        <a href="#stop">4. Stop it</a>
+        <a href="#labels">Reading the labels</a>
+        <a href="#find-more">Finding things quickly</a>
+        <a href="#settings">Settings</a>
+      </aside>
+    </div>

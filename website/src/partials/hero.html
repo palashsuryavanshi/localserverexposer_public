@@ -1,0 +1,69 @@
+<section class="hero" id="top">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow">PUBLIC RELEASES &middot; WINDOWS DEVELOPER TOOL</span>
+          <h1 class="hero__title">Your local servers, <em>accessible anywhere.</em></h1>
+          <p class="hero__lede">
+            Find local development servers, manage Cloudflare Tunnels, and test your projects
+            across devices — all from a simple Windows desktop interface.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href="#download" data-download-cta>
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5v8.2l2.9-2.9 1.06 1.06L8 12.06 4.04 7.86 5.1 6.8l2.9 2.9V1.5h1ZM2.5 12.5h11v1.6h-11z"/></svg>
+              <span>Download for Windows</span>
+            </a>
+            <a class="btn btn--lg" href="{{ urls.repo }}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.21 1.87.86 2.33.66.07-.52.28-.86.5-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+              <span>Explore on GitHub</span>
+            </a>
+          </div>
+
+          <div class="hero__meta">
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5"/></svg>
+              Windows desktop application
+            </span>
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M1.5 8h13M8 1.5c2 2.2 2 10.8 0 13-2-2.2-2-10.8 0-13Z"/></svg>
+              Cloudflare Tunnel integration
+            </span>
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 1.5 13.5 4v4.2c0 3.3-2.3 5.6-5.5 6.3-3.2-.7-5.5-3-5.5-6.3V4L8 1.5Z"/></svg>
+              Designed for local development
+            </span>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <div class="window window--hero">
+            <div class="window__bar">
+              <span class="window__dots"><span></span><span></span><span></span></span>
+              <span class="window__title">LocalServerExposer.exe</span>
+            </div>
+            <div class="window__body">
+              <img
+                class="hero__shot"
+                src="assets/app-servers-hero.webp"
+                alt="Local Server Exposer listing discovered local development servers, including Ready HTTP services on ports 3000 and 5173"
+                width="1122"
+                height="789"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="Compatibility at a glance">
+      <div class="container trust__grid">
+        {{#each TRUST_POINTS}}
+        <div class="trust__item">
+          <strong>{{ this.label }}</strong>
+          <span>{{ this.note }}</span>
+        </div>
+        {{/each}}
+      </div>
+    </section>

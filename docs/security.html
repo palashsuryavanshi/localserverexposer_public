@@ -1,184 +1,64 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy and security — Local Server Exposer</title>
-<meta name="description" content="What Local Server Exposer does with your data, the risks of making a local server reachable over the internet, what the app guarantees, and its known limitations.">
-<link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/security.html">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Privacy and security — Local Server Exposer">
-<meta property="og:description" content="Bearer-access tunnel URLs, loopback-only exposure, no telemetry, and what the app refuses to do.">
-<meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/security.html">
-<link rel="icon" href="assets/logo.png" type="image/png">
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html"><img src="assets/logo.png" alt="">Local Server Exposer</a>
-    <nav class="site-nav">
-      <a href="index.html">Home</a>
-      <a href="getting-started.html">Getting started</a>
-      <a href="installation.html">Installation</a>
-      <a href="troubleshooting.html">Troubleshooting</a>
-      <a href="security.html" aria-current="page">Security</a>
-      <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">Downloads</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <div class="page-head">
-    <p class="breadcrumbs"><a href="index.html">Home</a> / Privacy and security</p>
-    <h1>Privacy and security</h1>
-    <p>
-      What the app does with your data, what sharing a local server means, and
-      what it does to reduce the risk.
-    </p>
-  </div>
-
-  <section>
-    <div class="prose">
-
-      <div class="callout danger">
-        <p><strong>Exposing a server makes it reachable from the public internet.</strong></p>
-        <p>
-          A Quick Tunnel URL is unguessable but <em>bearer access</em>: anyone who
-          obtains it can send requests to your server until you stop the tunnel.
-          Only share development servers you trust, on a machine you control,
-          and stop tunnels when you are done.
-        </p>
-      </div>
-
-      <h2>The short version</h2>
-      <ul>
-        <li>The link is the credential — treat it like a password.</li>
-        <li>Only expose development servers you trust.</li>
-        <li>No telemetry, no analytics, no account system.</li>
-        <li>Tunnel URLs are redacted before anything is written to disk.</li>
-        <li>A tunnel cannot outlive the application.</li>
-        <li>The binaries are not code-signed; verify the published SHA-256.</li>
-      </ul>
-
-      <h2>What happens when you expose a server</h2>
-      <p>
-        Local Server Exposer starts a
-        <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/">Cloudflare Quick Tunnel</a>:
-        your local port is bridged to an ephemeral public HTTPS URL on
-        <code>*.trycloudflare.com</code>, served through Cloudflare's network.
-      </p>
-      <ul>
-        <li><strong>The URL is bearer access.</strong> The hostname is random and hard to guess, but anyone who obtains the URL can reach your server for as long as the tunnel runs. Do not post it publicly.</li>
-        <li><strong>Your server sees the real traffic.</strong> Requests arrive at your local process with their original path, headers and body. If your dev server has an unauthenticated admin endpoint, it is now on the public internet.</li>
-        <li><strong>You stay responsible</strong> for what you share. The app does not filter content passing through the tunnel.</li>
-        <li><strong>Cloudflare sees the traffic</strong>, as any reverse proxy must; their privacy terms apply.</li>
-        <li><strong>Quick Tunnels are for development</strong> — anonymous, no custom hostname, not a production front end.</li>
-      </ul>
-      <p>Stopping the tunnel ends it: the URL stops resolving to your machine as soon as the tunnel process exits.</p>
-
-      <h2>What the application refuses to do</h2>
-      <table>
-        <tr><th>Confirmation before every exposure</th><td>Every start — including retries — shows a dialog naming the port and process. There is no permanent "don't ask again".</td></tr>
-        <tr><th>Only HTTP/HTTPS can be exposed</th><td>The app re-probes the target itself immediately before starting a tunnel and refuses anything that does not answer as a web server.</td></tr>
-        <tr><th>Only loopback targets</th><td>Discovery and probing are limited to <code>127.0.0.0/8</code> and the <code>0.0.0.0</code> wildcard. Remote hosts are never probed or exposed.</td></tr>
-        <tr><th>Tunnels never outlive the app</th><td>Each tunnel process belongs to a Windows Job Object that terminates its members when the app's process ends — including on crash, forced kill, sign-out or shutdown.</td></tr>
-        <tr><th>No shell execution</th><td>Process arguments are fixed and built in the backend; the interface has no shell, filesystem or process capability.</td></tr>
-        <tr><th>The tunnel client is verified</th><td>Checked for plausible size, PE executable format and a parseable <code>--version</code> — before first use and before <em>every</em> tunnel.</td></tr>
-      </table>
-
-      <h2>Local data and logs</h2>
-      <p>Everything the app stores lives in <code>%APPDATA%\com.localexp.local-server-exposer\</code>:</p>
-      <table>
-        <tr><th><code>config.json</code></th><td>UI preferences, favorite ports, scan interval, autostart flag. No credentials, no tunnel URLs.</td></tr>
-        <tr><th><code>logs\</code></th><td>Daily rotating files with 7-day retention, plus <code>panic.log</code> on a crash. Tunnel URLs are redacted (<code>https://[tunnel].trycloudflare.com</code>) before anything is written. Response bodies, headers and cookies are never logged.</td></tr>
-        <tr><th><code>cloudflared.exe</code></th><td>The Cloudflare tunnel client, present only if you chose to install it, and verified before use.</td></tr>
-      </table>
-      <p><strong>There is no telemetry and no analytics</strong>: the app reports nothing to anyone.</p>
-      <p>Two honest caveats:</p>
-      <ul>
-        <li>URL redaction is a filter applied to text the tunnel client prints; it is not a guarantee about every future version of that output.</li>
-        <li>Windows toast notifications stay in the Windows notification history until dismissed, and a tunnel notification includes the public URL. Clear notification history on shared machines if that matters.</li>
-      </ul>
-
-      <h2>Downloads</h2>
-      <p>
-        The tunnel client (<code>cloudflared</code>) is downloaded only when you
-        explicitly approve it, from the official Cloudflare release URL over
-        HTTPS. It is never bundled with the installer, and a valid copy is never
-        silently replaced. <code>cloudflared</code> is © Cloudflare, Inc. and is
-        licensed under the Apache License 2.0.
-      </p>
-
-      <h2>Integrity of the binaries</h2>
-      <p>
-        Every release publishes a <code>SHA256SUMS.txt</code>, and a workflow
-        recomputes each checksum after publication. For 1.0.0:
-      </p>
-      <pre><code>f9c5b14266ea4ca4f337bc07053c6e3a160ead384286a82e75ecbc01a00c12a4  LocalServerExposer_1.0.0_x64-setup.exe</code></pre>
-      <p>
-        The binaries are <strong>not Authenticode-signed</strong>, which means
-        SmartScreen shows an "unrecognized app" warning and the app has no
-        publisher reputation. Authenticity therefore rests on the published
-        checksum, not on a signature chain. Download only from the
-        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases">releases page</a>.
-      </p>
-
-      <h2>Threat model summary</h2>
-      <table>
-        <tr><th>Accidental exposure</th><td>Mitigated: confirmation per exposure, honest status labels, destructive actions separated.</td></tr>
-        <tr><th>Exposing a non-web service</th><td>Not possible: re-validated in the backend before each start.</td></tr>
-        <tr><th>Malicious response from a probed server</th><td>Mitigated: probing is bounded (size caps, timeouts, header and title limits) and nothing is rendered as markup.</td></tr>
-        <tr><th>Command injection via port, path or URL</th><td>Not possible: typed arguments, integer ports, strict URL validation, no shell.</td></tr>
-        <tr><th>Compromise via the tunnel client</th><td>Mitigated: HTTPS download, size + format + <code>--version</code> verification, re-verified on every use.</td></tr>
-        <tr><th>Orphaned tunnel after a crash</th><td>Not possible: kill-on-close Job Object, covered by automated tests.</td></tr>
-        <tr><th>Public URL leaking through logs</th><td>Mitigated: redaction before writing; residual risk from notification history.</td></tr>
-      </table>
-
-      <h2>Known limitations</h2>
-      <ul>
-        <li><strong>Tunnel URLs are bearer credentials.</strong> Inherent to the product.</li>
-        <li><strong>No checksum pinning for the tunnel client.</strong> Cloudflare publishes no checksum file at the download URL used, so identity rests on HTTPS, format and <code>--version</code>.</li>
-        <li><strong>Self-signed HTTPS origins</strong> are reached with TLS verification relaxed, and only for loopback targets.</li>
-        <li><strong>Unsigned binaries</strong> mean no publisher reputation and a SmartScreen warning.</li>
-        <li><strong>Notification history</strong> retains tunnel URLs until cleared.</li>
-        <li>This application has had an <strong>internal threat-model review</strong>. It has <strong>not</strong> been penetration tested or certified by any third party, and no malware-free status is claimed.</li>
-      </ul>
-
-      <h2>Reporting a security issue</h2>
-      <p>
-        Report privately through
-        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/security/advisories/new">GitHub Security Advisories</a>
-        for this project rather than in a public issue, and give the maintainer
-        a reasonable time to release a fix before disclosing details.
-      </p>
-      <div class="callout warn">
-        <p><strong>Never include a live tunnel URL in a report.</strong> Treat it as a password.</p>
-      </div>
-
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="cols">
-      <div><strong>Local Server Exposer</strong><br>Maintained by <a href="https://github.com/palashsuryavanshi">palashsuryavanshi</a></div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="getting-started.html">Getting started</a>
-        <a href="installation.html">Installation</a>
-        <a href="troubleshooting.html">Troubleshooting</a>
-        <a href="security.html">Security</a>
-        <a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues">Report an issue</a>
-      </nav>
-    </div>
-    <p class="legal">Proprietary software — all rights reserved. Distributed as a compiled binary; the source code is not publicly available.</p>
-  </div>
-</footer>
-
-</body>
-</html>
+<!doctype html><html lang="en"><head><script>window.__LSE_RELEASE__={"state":"ready","tag":"v1.0.0","version":"1.0.0","name":"Local Server Exposer 1.0.0 (Windows x64)","url":"https://github.com/palashsuryavanshi/localserverexposer_public/releases/tag/v1.0.0","publishedAt":"2026-10-10T18:18:36Z","asset":{"name":"LocalServerExposer_1.0.0_x64-setup.exe","size":2914395,"sizeText":"2.78 MB","url":"https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe"},"fetchedAt":"2026-10-10T19:20:01.751Z"};window.__LSE_RELEASE_API__="https://api.github.com/repos/palashsuryavanshi/localserverexposer_public/releases/latest";</script><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Security &amp; privacy — Local Server Exposer</title><meta name="description" content="What happens when you expose a local development server, what the application enforces, and the checklist to run before sharing a URL." /><link rel="canonical" href="https://palashsuryavanshi.github.io/localserverexposer_public/security.html" /><meta name="theme-color" content="#090b10" /><meta name="color-scheme" content="dark" /><meta name="referrer" content="strict-origin-when-cross-origin" /><meta property="og:type" content="website" /><meta property="og:site_name" content="Local Server Exposer" /><meta property="og:title" content="Security &amp; privacy — Local Server Exposer" /><meta property="og:description" content="What happens when you expose a local development server, what the application enforces, and the checklist to run before sharing a URL." /><meta property="og:url" content="https://palashsuryavanshi.github.io/localserverexposer_public/security.html" /><meta property="og:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/og-image.png" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Local Server Exposer showing discovered local development servers and a running Cloudflare Quick Tunnel" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="Security &amp; privacy — Local Server Exposer" /><meta name="twitter:description" content="What happens when you expose a local development server, what the application enforces, and the checklist to run before sharing a URL." /><meta name="twitter:image" content="https://palashsuryavanshi.github.io/localserverexposer_public/assets/og-image.png" /><link rel="icon" href="assets/favicon.svg" type="image/svg+xml" /><link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png" /><link rel="apple-touch-icon" href="assets/apple-touch-icon.png" /><link rel="stylesheet" href="assets/site.css" /><script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Local Server Exposer",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows 10, Windows 11",
+        "description": "Discover local development servers, manage Cloudflare Quick Tunnels, and access your projects from external devices using a convenient Windows desktop application.",
+        "url": "https://palashsuryavanshi.github.io/localserverexposer_public/",
+        "downloadUrl": "https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe",
+        "softwareVersion": "1.0.0",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "maintainer": { "@type": "Person", "name": "palashsuryavanshi", "url": "https://github.com/palashsuryavanshi" }
+      }
+    </script></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container site-header__inner"><a class="brand" href="index.html" aria-label="Local Server Exposer — home"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6" /><path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round" /><circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8" /></svg><span>Local Server Exposer</span></a><nav class="nav" id="primary-nav" aria-label="Primary"><a href="index.html#features">Features</a><a href="index.html#how-it-works">How it works</a><a href="index.html#security">Security</a><a href="index.html#faq">FAQ</a><a class="nav-github" href="https://github.com/palashsuryavanshi/localserverexposer_public" target="_blank" rel="noopener">GitHub</a></nav><div class="header-actions"><a class="btn btn--ghost btn-ghost" href="https://github.com/palashsuryavanshi/localserverexposer_public" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.21 1.87.86 2.33.66.07-.52.28-.86.5-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>GitHub</span></a><a class="btn btn--primary" href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" data-download-cta><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5v8.2l2.9-2.9 1.06 1.06L8 12.06 4.04 7.86 5.1 6.8l2.9 2.9V1.5h1ZM2.5 12.5h11v1.6h-11z"/></svg><span>Download</span></a><button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="Open navigation menu"
+          ><svg class="icon-menu" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg><svg class="icon-close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div></div></header><main id="main"><div class="page-head"><div class="container"><p class="breadcrumbs"><a href="index.html">Home</a> / Security &amp; privacy</p><h1>Security &amp; privacy</h1><p>What happens when you expose a local server, what the application enforces on your behalf, and where the limits are.</p></div></div><div class="container doc-layout"><article class="prose"><div class="callout callout--warn"><p><strong>Exposing a server makes it reachable from the public internet.</strong> A
+            Quick Tunnel URL is unguessable but <em>bearer access</em>: anyone who obtains it can
+            reach your service until you stop the tunnel. Nothing here turns an unfinished
+            development server into a safe production service.
+          </p></div><h2 id="what-happens">What happens when you expose a server</h2><p>
+          Local Server Exposer starts a Cloudflare Quick Tunnel: your local port is bridged to
+          an ephemeral public HTTPS address on <code>*.trycloudflare.com</code>, served through
+          Cloudflare's network.
+        </p><ul><li><strong>The URL is the credential.</strong> The hostname is random, but anyone holding the link can send requests to your service while the tunnel runs.</li><li><strong>Your server sees real traffic</strong> — original paths, headers and body. An unauthenticated admin endpoint on your dev server becomes a public admin endpoint.</li><li><strong>Cloudflare sees the traffic</strong>, as any reverse proxy must. Their terms apply to it.</li><li><strong>Quick Tunnels are for development.</strong> Anonymous, no custom hostname, no account, not a production front end.</li></ul><p>Stopping the tunnel ends it: the address stops reaching your machine as soon as the tunnel process exits.</p><h2 id="enforced">What the application enforces</h2><div class="table-wrap"><table><tr><th>Property</th><th>How it works</th></tr><tr><td>Confirmation before every exposure</td><td>A dialog names the port, URL and process. No permanent opt-out.</td></tr><tr><td>Only HTTP/HTTPS can be exposed</td><td>The app re-probes the target immediately before starting a tunnel and refuses anything that does not answer as a web server — regardless of what the interface says.</td></tr><tr><td>Loopback targets only</td><td>Discovery and probing cover <code>127.0.0.0/8</code> and the <code>0.0.0.0</code> wildcard. Remote hosts are never probed or exposed.</td></tr><tr><td>Tunnels never outlive the app</td><td>Each tunnel process is attached to a Windows Job Object that terminates its members when the application process ends — including crash, forced kill and sign-out.</td></tr><tr><td>No shell execution</td><td>Process arguments are fixed and built in the backend. The interface has no shell, filesystem or arbitrary-process capability.</td></tr><tr><td>Tunnel client verification</td><td>Checked for plausible size, PE executable format and a parseable <code>--version</code> — before first use and again before every tunnel.</td></tr></table></div><h2 id="data">Local data and privacy</h2><p>Everything the application stores lives in <code>%APPDATA%\com.localexp.local-server-exposer\</code>:</p><div class="table-wrap"><table><tr><th>Item</th><th>Contents</th></tr><tr><td><code>config.json</code></td><td>Interface preferences, favourite ports, scan interval, autostart flag. No credentials.</td></tr><tr><td><code>logs\</code></td><td>Daily rotating files with seven-day retention, plus <code>panic.log</code> if the app ever crashes. Tunnel URLs are redacted before writing; response bodies, headers and cookies are never logged.</td></tr><tr><td><code>cloudflared.exe</code></td><td>The tunnel client, present only if you chose to install it, and verified before use.</td></tr></table></div><p>
+          The application makes no analytics or telemetry calls. Its network activity is limited
+          to the tunnel itself and, once, the tunnel-client download you approve.
+        </p><p>
+          One caveat worth stating plainly: Windows toast notifications are kept in the Windows
+          notification history until dismissed, and a tunnel notification includes the public
+          URL. On a shared machine, clear notification history if that matters to you.
+        </p><h2 id="integrity">Integrity of the download</h2><p>
+          Every release publishes a <code>SHA256SUMS.txt</code>, and an automated workflow
+          re-downloads the assets and recomputes each checksum after publication, failing if
+          anything does not match.
+        </p><p>
+          The binaries are <strong>not Authenticode-signed</strong>. That means SmartScreen
+          warnings and no publisher reputation; authenticity rests on the published checksum and
+          on downloading only from the
+          <a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">releases page</a>.
+        </p><h2 id="limits">Known limitations</h2><ul><li><strong>Tunnel URLs are bearer credentials.</strong> Inherent to how the model works.</li><li><strong>No checksum pinning for the tunnel client.</strong> Cloudflare publishes no checksum file at the download URL used, so identity rests on HTTPS, file format and the <code>--version</code> output.</li><li><strong>Self-signed HTTPS origins</strong> are reached with TLS verification relaxed, for loopback targets only.</li><li><strong>No third-party tunnel modes.</strong> Named tunnels, custom hostnames and Cloudflare Access are not supported in 1.0.0.</li><li><strong>Local machine only.</strong> If your computer is off or disconnected, the public URL stops serving. This is a development tool, not hosting.</li></ul><h2 id="assurance">What kind of assurance this is</h2><p>
+          The application has been through an internal threat-model review covering
+          accidental exposure, command injection, path traversal, malicious local services and
+          orphaned tunnels. It has <strong>not</strong> been penetration tested, audited or
+          certified by an independent third party, and no malware-free status is claimed. A
+          clean antivirus scan on the build machine is a sanity check, not a guarantee.
+        </p><h2 id="report">Reporting a security issue</h2><p>
+          Report it privately through
+          <a href="https://github.com/palashsuryavanshi/localserverexposer_public/security/advisories/new" target="_blank" rel="noopener">GitHub Security Advisories</a>
+          rather than in a public issue, and allow the maintainer reasonable time to ship a fix
+          before disclosing details. <strong>Never include a live tunnel URL</strong> — treat it
+          as a password.
+        </p></article><aside class="doc-aside" aria-label="On this page"><a href="#what-happens">What happens when you expose</a><a href="#enforced">What the app enforces</a><a href="#data">Local data and privacy</a><a href="#integrity">Integrity of the download</a><a href="#limits">Known limitations</a><a href="#assurance">Kind of assurance</a><a href="#report">Report an issue</a></aside></div></main><footer class="site-footer"><div class="container"><div class="site-footer__grid"><div class="site-footer__brand"><a class="brand" href="index.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="8.2" width="11.6" height="9.2" rx="2.4" stroke="currentColor" stroke-width="1.6" /><path d="M5.8 12.2h4.6M5.8 15h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M14.4 10.6c2-2.2 3.6-3.6 5.6-4.6" stroke="#35d6e8" stroke-width="1.6" stroke-linecap="round" /><circle cx="20.8" cy="5.4" r="2.1" fill="#35d6e8" /></svg><span>Local Server Exposer</span></a><p class="site-footer__desc">
+              Your local servers, accessible anywhere. A Windows desktop application for
+              discovering local development servers and sharing them through Cloudflare Quick
+              Tunnels.
+            </p></div><nav aria-label="Product"><h2>Product</h2><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how-it-works">How it works</a></li><li><a href="index.html#security">Security</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#download">Download</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/releases" target="_blank" rel="noopener">All releases</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues/new" target="_blank" rel="noopener">Report an issue</a></li></ul></nav><nav aria-label="Resources"><h2>Resources</h2><ul><li><a href="index.html#download">Installation</a></li><li><a href="index.html#how-it-works">How it works</a></li><li><a href="security.html">Security &amp; privacy</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="https://github.com/palashsuryavanshi/localserverexposer_public/issues/new" target="_blank" rel="noopener">Report a bug</a></li></ul></nav></div><div class="site-footer__legal"><span>&copy; 2026 palashsuryavanshi. All rights reserved.</span><span>
+            Proprietary software distributed as a compiled binary; the application source code
+            is not public. See <a href="https://github.com/palashsuryavanshi/localserverexposer_public/blob/main/LICENSE">LICENSE</a>.
+          </span></div></div></footer><script src="assets/site.js" defer></script></body></html>
