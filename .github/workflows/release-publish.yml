@@ -82,24 +82,25 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.meta.outputs.tag }}
           RELEASE_ID: ${{ steps.meta.outputs.id }}
-          RELEASE_URL: ${{ steps.meta.outputs.url }}
         run: |
           set -euo pipefail
-          cat > comment.md <<'MD'
-          ### âœ… Checksum verification
-
-          Every artifact listed in `SHA256SUMS.txt` was downloaded from this
-          release and its SHA-256 recomputed; all values matched.
-
-          Verify a download yourself:
-
-          ```powershell
-          Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256
-          ```
-
-          > These binaries are not code-signed, so SmartScreen will warn on first
-          > run. Verify the checksum before choosing *More info â†’ Run anyway*.
-          MD
-          gh api "repos/${GITHUB_REPOSITORY}/releases/$RELEASE_ID/comments" \
-            --method POST --input - <<< "$(jq -Rs . < comment.md)" \
-            --jq '.html_url'
+          # A release conversation is an issue thread: the release id is its
+          # issue number, and the issues comments endpoint is the supported one.
+          body=$(printf '%s\n' \
+            '### Checksum verification' \
+            '' \
+            'Every artifact listed in `SHA256SUMS.txt` was downloaded from this' \
+            'release and its SHA-256 recomputed by an automated job; all values' \
+            'matched.' \
+            '' \
+            'Verify a download yourself:' \
+            '' \
+            '```powershell' \
+            'Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256' \
+            '```' \
+            '' \
+            '> These binaries are not code-signed, so SmartScreen will warn on' \
+            '> first run. Verify the checksum before choosing *More info -> Run anyway*.')
+          jq -n --arg body "$body" '{body: $body}' \
+            | gh api "repos/${GITHUB_REPOSITORY}/issues/${RELEASE_ID}/comments" \
+                --method POST --input - --jq '.html_url'
