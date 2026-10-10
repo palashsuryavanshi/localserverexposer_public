@@ -102,6 +102,11 @@ after the capture.</sub>
 Full instructions, including verification and manual-install notes, are in
 [docs/installation.md](docs/installation.md).
 
+Every published release is checked automatically: a GitHub Actions job
+downloads the release assets, recomputes each SHA-256 in `SHA256SUMS.txt`, and
+fails if anything does not match. The result appears in the Actions tab of this
+repository.
+
 > The application is distributed as a compiled Windows binary. **Its source
 > code is not publicly available.** This repository contains documentation and
 > release downloads only.
