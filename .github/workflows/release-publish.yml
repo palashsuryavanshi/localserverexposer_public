@@ -1,4 +1,4 @@
-# Verifies that the checksums published with a release match the binaries that
+﻿# Verifies that the checksums published with a release match the binaries that
 # were actually uploaded.
 #
 # Safety properties, by design:
@@ -86,7 +86,7 @@ jobs:
         run: |
           set -euo pipefail
           cat > comment.md <<'MD'
-          ### ✅ Checksum verification
+          ### âœ… Checksum verification
 
           Every artifact listed in `SHA256SUMS.txt` was downloaded from this
           release and its SHA-256 recomputed; all values matched.
@@ -94,11 +94,11 @@ jobs:
           Verify a download yourself:
 
           ```powershell
-          Get-FileHash ".\Local Server Exposer_1.0.0_x64-setup.exe" -Algorithm SHA256
+          Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256
           ```
 
           > These binaries are not code-signed, so SmartScreen will warn on first
-          > run. Verify the checksum before choosing *More info → Run anyway*.
+          > run. Verify the checksum before choosing *More info â†’ Run anyway*.
           MD
           gh api "repos/${GITHUB_REPOSITORY}/releases/$RELEASE_ID/comments" \
             --method POST --input - <<< "$(jq -Rs . < comment.md)" \

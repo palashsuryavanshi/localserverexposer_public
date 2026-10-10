@@ -43,7 +43,7 @@ Each listener appears as a card:
    **Cancel is the focused button**, and Escape or clicking outside also cancels.
 3. Press **Expose** to confirm.
 
-   ![The exposure confirmation](assets/screenshot-confirm.png)
+   ![The exposure confirmation](../assets/screenshot-confirm.png)
 
 There is no "remember my choice" option: every new exposure and every retry is
 confirmed individually, so sharing is never a habit you acquire by accident.

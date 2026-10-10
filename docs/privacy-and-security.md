@@ -1,4 +1,4 @@
-# Privacy and security
+﻿# Privacy and security
 
 This page explains what Local Server Exposer does with your data, what risks
 sharing a local server carries, and what the application does to reduce them.
@@ -55,12 +55,12 @@ These are enforced in the application, not merely documented:
 
 | Guarantee | How it works |
 |---|---|
-| **Confirmation before every exposure** | Every start — including retries — shows a dialog naming the port and process. There is no permanent "don't ask again". |
+| **Confirmation before every exposure** | Every start â€” including retries â€” shows a dialog naming the port and process. There is no permanent "don't ask again". |
 | **Only HTTP/HTTPS can be exposed** | The application re-probes the target itself immediately before starting a tunnel and refuses anything that does not answer as a web server, regardless of what the interface claims. |
 | **Only loopback targets** | Discovery and probing are limited to `127.0.0.0/8` and the `0.0.0.0` wildcard. Remote hosts are never probed or exposed. |
-| **Tunnels never outlive the app** | Each tunnel process belongs to a Windows Job Object configured to terminate its members when the app's process ends — including on crash, forced kill, sign-out or shutdown. |
+| **Tunnels never outlive the app** | Each tunnel process belongs to a Windows Job Object configured to terminate its members when the app's process ends â€” including on crash, forced kill, sign-out or shutdown. |
 | **No shell execution** | Process arguments are fixed and built in the backend. The user interface has no shell, filesystem or arbitrary-process capability. |
-| **The tunnel client is verified** | `cloudflared` is checked for plausible size, PE executable format, and a parseable `--version` result — before first use and again before **every** tunnel. |
+| **The tunnel client is verified** | `cloudflared` is checked for plausible size, PE executable format, and a parseable `--version` result â€” before first use and again before **every** tunnel. |
 
 ## Local data and logs
 
@@ -90,7 +90,7 @@ The application downloads `cloudflared` only when you explicitly approve it,
 from the official Cloudflare release URL over HTTPS. It is never bundled with
 the installer, and a valid copy is never silently replaced.
 
-`cloudflared` is © Cloudflare, Inc. and licensed under the Apache License 2.0.
+`cloudflared` is Â© Cloudflare, Inc. and licensed under the Apache License 2.0.
 
 ## Integrity of the binaries
 
@@ -98,7 +98,7 @@ Every release publishes a `SHA256SUMS.txt` file with the SHA-256 hash of each
 downloadable artifact.
 
 ```powershell
-Get-FileHash ".\Local Server Exposer_1.0.0_x64-setup.exe" -Algorithm SHA256
+Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256
 ```
 
 The binaries are **not Authenticode-signed**, which has two consequences:
@@ -144,4 +144,4 @@ Please report security issues privately through
 for this repository rather than in a public issue, and give the maintainer a
 reasonable time to release a fix before disclosing details.
 
-**Never include a live tunnel URL in a report** — treat it as a password.
+**Never include a live tunnel URL in a report** â€” treat it as a password.
