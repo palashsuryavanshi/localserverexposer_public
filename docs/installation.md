@@ -1,4 +1,4 @@
-﻿# Installation
+# Installation
 
 Local Server Exposer is a **per-user Windows application**. Installation needs
 no administrator rights and does not modify system-wide state.

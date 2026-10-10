@@ -1,4 +1,4 @@
-﻿# Privacy and security
+# Privacy and security
 
 This page explains what Local Server Exposer does with your data, what risks
 sharing a local server carries, and what the application does to reduce them.
