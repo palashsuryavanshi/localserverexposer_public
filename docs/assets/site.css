@@ -888,8 +888,11 @@ hr {
   margin-bottom: var(--sp-4);
 }
 
-.app-frame__head h4 {
+.app-frame__head h4,
+.app-frame__title {
   font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
 }
 
 .app-frame__head p {
@@ -1147,6 +1150,7 @@ hr {
   font-weight: 600;
 }
 
+.step h3,
 .step h4 {
   font-size: 0.98rem;
   margin-bottom: 4px;
