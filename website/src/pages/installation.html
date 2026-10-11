@@ -53,11 +53,11 @@
 
         <h2 id="verify">Verify what you downloaded</h2>
         <p>Each release publishes a <code>SHA256SUMS.txt</code>. Compare it with your download:</p>
-        <pre><code>Get-FileHash ".\LocalServerExposer_1.0.0_x64-setup.exe" -Algorithm SHA256</code></pre>
+        <pre><code>Get-FileHash ".\LocalServerExposer_&lt;version&gt;_x64-setup.exe" -Algorithm SHA256</code></pre>
         <p>
           The published line looks like this — the hash must match exactly:
         </p>
-        <pre><code>&lt;sha256&gt;  LocalServerExposer_1.0.0_x64-setup.exe</code></pre>
+        <pre><code>&lt;sha256&gt;  LocalServerExposer_&lt;version&gt;_x64-setup.exe</code></pre>
         <p>
           A scheduled workflow re-checks the published checksums after every release and
           records the result in the Actions tab of the repository.
