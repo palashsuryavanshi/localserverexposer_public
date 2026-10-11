@@ -1,46 +1,69 @@
-# Local Server Exposer — Notice
+Local Server Exposer
+Copyright (c) 2026 Palash Suryavanshi. All rights reserved.
 
-**Copyright © 2026 palashsuryavanshi. All rights reserved.**
+This software is proprietary software. It is not licensed under any
+open-source license, and no open-source license applies to it in whole or in
+part.
 
-This repository (`localserverexposer_public`) contains public documentation,
-screenshots and links to released binaries of the **Local Server Exposer**
-desktop application for Windows.
+1. No license granted
 
-## No license granted
+No permission is granted to use, copy, modify, sublicense, publish, distribute,
+relicense, redistribute, rebrand, sell, or create derivative works of this
+software or of any part of it, except as expressly permitted in a written
+agreement signed by the copyright holder.
 
-The materials in this repository and the application binaries published as
-release assets are **not licensed under any open-source license**. No permission
-is granted to copy, modify, sublicense, redistribute, rebrand, or create
-derivative works from them. Where the law reserves rights to the copyright
-holder or its licensors, all rights are reserved.
+Where the law reserves rights to the copyright holder or its licensors, all
+rights are reserved. This file is a notice of that reservation; it is not a
+license agreement, and it does not enumerate conduct beyond the default
+reservation of rights that applies where no license is granted.
 
-This file is a copyright notice, not a complete license agreement, and it does
-not purport to enumerate prohibited conduct beyond the default reservation of
-rights.
+2. What this covers
 
-## Trademarks
+This notice applies to:
 
-"Local Server Exposer", the application name, its icon and screenshots are used
-to identify the software published by its owner. Third-party names referenced in
-the documentation (including Cloudflare, cloudflared, Tauri, React, Rust and
-WebView2) remain the property of their respective owners and are used for
-identification only.
+  - the source code of this software;
+  - the compiled desktop application for Windows published by its owner;
+  - the installer, updater manifests and signatures published as release
+    assets;
+  - the name, icon, interface text and screenshots used to identify them.
 
-## Owner decision pending
+The publicly downloadable installer and its signature are covered by this
+notice. No additional rights are granted to recipients by downloading,
+installing, or possessing a copy.
 
-**No license has been approved by the copyright holder for this software.**
-Before public distribution is widened, the owner must choose the terms — for
-example a proprietary end-user license agreement, a source-available license, or
-an open-source license. Until that decision is made and this file is replaced
-with the approved terms, the default reservation of rights above applies.
+3. Third-party components
 
-Any questions about licensing should be raised as an issue in this repository
-before redistribution or reuse.
+Third-party components distributed with, downloaded by, or referenced from this
+software are licensed by their own authors and are not covered by this notice.
+This includes, without limitation:
 
----
+  - cloudflared, copyright Cloudflare, Inc., licensed under the Apache License
+    2.0. It is downloaded separately at the user's request and is not
+    redistributed as part of these releases.
+  - Tauri, React, Rust and their transitive dependencies, used under their own
+    licenses.
 
-*Third-party components distributed with the application are licensed by their
-own authors and are not covered by this notice. In particular, `cloudflared` is
-© Cloudflare, Inc. and is licensed under the Apache License 2.0; it is
-downloaded separately by the application at the user's request and is not
-redistributed as part of these releases.*
+4. Trademarks
+
+"Local Server Exposer" and the associated name, icon and branding identify the
+software published by its owner and may not be used to indicate that any
+modified or derived work is endorsed by, or originates from, that owner.
+Third-party names referenced in this software and its documentation, including
+Cloudflare, Tauri, React, Rust and WebView2, remain the property of their
+respective owners and are used for identification only.
+
+5. No warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+6. Contact
+
+Questions about licensing, or requests for permission to use this software,
+should be raised with the copyright holder before any redistribution or reuse.
+
+--------------------------------------------------------------------------
+
+By accepting these terms you confirm that you have read and agree to them. If
+you do not agree, do not use, download, install or distribute this software.
