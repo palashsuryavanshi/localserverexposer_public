@@ -16,6 +16,8 @@ machine and exposes selected ones through **Cloudflare Quick Tunnels**.
 [![Latest release](https://img.shields.io/github/release/palashsuryavanshi/localserverexposer_public?label=release&color=success)](https://github.com/palashsuryavanshi/localserverexposer_public/releases/latest)
 [![License](https://img.shields.io/badge/license-proprietary%20(all%20rights%20reserved)-8A8A8A)](LICENSE)
 
+[![Get it on Orion Store](https://raw.githubusercontent.com/RookieEnough/Orion-Store/refs/heads/main/assets/orion-badge.png)](https://rookieenough.github.io/Orion-Data/redirect.html?id=local-server-exposer&icon=https%3A%2F%2Fraw.githubusercontent.com%2Fpalashsuryavanshi%2Flocalserverexposer_public%2Fmain%2Fdocs%2Fassets%2Fapp-icon.png)
+
 **[⬇ Download for Windows](https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe)** · [Install guide](https://palashsuryavanshi.github.io/localserverexposer_public/installation.html) · [Get started](https://palashsuryavanshi.github.io/localserverexposer_public/getting-started.html) · [Troubleshooting](https://palashsuryavanshi.github.io/localserverexposer_public/troubleshooting.html) · [Security](https://palashsuryavanshi.github.io/localserverexposer_public/security.html)
 
 </div>
