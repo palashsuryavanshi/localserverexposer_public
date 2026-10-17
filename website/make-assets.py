@@ -218,6 +218,10 @@ def main() -> None:
             convert_screenshot(source, STATIC / target, width)
     if SOURCE_APP_ICON.exists():
         convert_screenshot(SOURCE_APP_ICON, STATIC / "app-icon.webp", 192, quality=88)
+        # The PNG is what third-party listings fetch as an icon (the README and
+        # website store badges point at docs/assets/app-icon.png), so it has to
+        # be a build output rather than a leftover: build.mjs wipes docs/.
+        artwork(512, STATIC / "app-icon.png")
 
 
 if __name__ == "__main__":

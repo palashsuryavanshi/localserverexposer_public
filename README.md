@@ -18,7 +18,7 @@ machine and exposes selected ones through **Cloudflare Quick Tunnels**.
 
 [![Get it on Orion Store](https://raw.githubusercontent.com/RookieEnough/Orion-Store/refs/heads/main/assets/orion-badge.png)](https://rookieenough.github.io/Orion-Data/redirect.html?id=local-server-exposer&icon=https%3A%2F%2Fraw.githubusercontent.com%2Fpalashsuryavanshi%2Flocalserverexposer_public%2Fmain%2Fdocs%2Fassets%2Fapp-icon.png)
 
-**[⬇ Download for Windows](https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe)** · [Install guide](https://palashsuryavanshi.github.io/localserverexposer_public/installation.html) · [Get started](https://palashsuryavanshi.github.io/localserverexposer_public/getting-started.html) · [Troubleshooting](https://palashsuryavanshi.github.io/localserverexposer_public/troubleshooting.html) · [Security](https://palashsuryavanshi.github.io/localserverexposer_public/security.html)
+**[⬇ Download for Windows](https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v2.1.0/LocalServerExposer_2.1.0_x64-setup.exe)** · [Install guide](https://palashsuryavanshi.github.io/localserverexposer_public/installation.html) · [Get started](https://palashsuryavanshi.github.io/localserverexposer_public/getting-started.html) · [Troubleshooting](https://palashsuryavanshi.github.io/localserverexposer_public/troubleshooting.html) · [Security](https://palashsuryavanshi.github.io/localserverexposer_public/security.html)
 
 </div>
 
@@ -72,10 +72,10 @@ Full walkthrough: [Get started](https://palashsuryavanshi.github.io/localservere
 
 ## Download
 
-Latest stable release: **v1.0.0** — `LocalServerExposer_1.0.0_x64-setup.exe`
-(2.78 MB, per-user install, no administrator rights).
+Latest stable release: **v2.1.0** — `LocalServerExposer_2.1.0_x64-setup.exe`
+(3.04 MB, per-user install, no administrator rights).
 
-- [Download the installer](https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v1.0.0/LocalServerExposer_1.0.0_x64-setup.exe)
+- [Download the installer](https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v2.1.0/LocalServerExposer_2.1.0_x64-setup.exe)
 - [All releases and checksums](https://github.com/palashsuryavanshi/localserverexposer_public/releases)
 - [Installation instructions](https://palashsuryavanshi.github.io/localserverexposer_public/installation.html)
 

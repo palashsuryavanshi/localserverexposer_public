@@ -42,11 +42,11 @@ export const RELEASE_API =
 /* ------------------------------------------------------------------ product */
 
 /**
- * Verified platform facts. Only claims checked against the shipped 1.5.0
+ * Verified platform facts. Only claims checked against the shipped 2.1.0
  * build belong here.
  */
 export const PRODUCT = {
-  version: "1.5.0",
+  version: "2.1.0",
   platforms: ["Windows 10 (x64)", "Windows 11 (x64)"],
   architectures: ["x64"],
   adminRequired: false,
@@ -90,7 +90,7 @@ export const FEATURES = [
     title: "One-click tunnel management",
     lede: "Manage external access without juggling terminals.",
     body:
-      "For services that answer HTTP or HTTPS, the app runs the supported Cloudflare Quick Tunnel workflow for you — spawn, watch for the published URL, keep the status current, stop it on request. Anonymous Quick Tunnels are the only mode supported in 1.5.0.",
+      "For services that answer HTTP or HTTPS, the app runs the supported Cloudflare Quick Tunnel workflow for you — spawn, watch for the published URL, keep the status current, stop it on request. Anonymous Quick Tunnels are the only mode supported in 2.1.0.",
   },
   {
     id: "urls",
@@ -285,7 +285,7 @@ export const FAQ = [
   },
   {
     q: "Do I need a Cloudflare account?",
-    a: "Not for the workflow this application supports. It creates anonymous Quick Tunnels, which need no account. Named tunnels, custom hostnames and Cloudflare Access are not supported in 1.5.0; those modes have their own account and configuration requirements.",
+    a: "Not for the workflow this application supports. It creates anonymous Quick Tunnels, which need no account. Named tunnels, custom hostnames and Cloudflare Access are not supported in 2.1.0; those modes have their own account and configuration requirements.",
   },
   {
     q: "Does it work with localhost:3000 and localhost:5173?",

@@ -1,15 +1,15 @@
 {
   "state": "ready",
-  "tag": "v2.0.0",
-  "version": "2.0.0",
-  "name": "Local Server Exposer v2.0.0 (Windows x64)",
-  "url": "https://github.com/palashsuryavanshi/localserverexposer_public/releases/tag/v2.0.0",
-  "publishedAt": "2026-10-11T12:39:04Z",
+  "tag": "v2.1.0",
+  "version": "2.1.0",
+  "name": "Local Server Exposer v2.1.0 (Windows x64)",
+  "url": "https://github.com/palashsuryavanshi/localserverexposer_public/releases/tag/v2.1.0",
+  "publishedAt": "2026-10-11T16:44:42Z",
   "asset": {
-    "name": "LocalServerExposer_2.0.0_x64-setup.exe",
-    "size": 3185003,
+    "name": "LocalServerExposer_2.1.0_x64-setup.exe",
+    "size": 3192911,
     "sizeText": "3.04 MB",
-    "url": "https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v2.0.0/LocalServerExposer_2.0.0_x64-setup.exe"
+    "url": "https://github.com/palashsuryavanshi/localserverexposer_public/releases/download/v2.1.0/LocalServerExposer_2.1.0_x64-setup.exe"
   },
-  "fetchedAt": "2026-10-11T12:39:04.000Z"
+  "fetchedAt": "2026-10-17T00:40:35.250Z"
 }
